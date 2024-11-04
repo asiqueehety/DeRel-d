@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>
+            DeRel'd
+        </title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--Shadows into light-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,100..700;1,100..700&family=Shadows+Into+Light&family=Square+Peg&display=swap" rel="stylesheet">
+        <!--Source code pro font-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,100..700;1,100..700&family=Shadows+Into+Light&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Square+Peg&display=swap" rel="stylesheet">
+        <!--courier prime font-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Josefin+Slab:ital,wght@0,100..700;1,100..700&family=Shadows+Into+Light&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Square+Peg&display=swap" rel="stylesheet">
+        <!--Bootstrap 5.3.3-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    </head>
+    <style>
+        #titleBar
+        {
+            font-family: "Shadows Into Light", cursive;
+            font-size: 100px;
+            font-style: normal;
+        }
+        .Bar
+        {
+            font-family: "Courier Prime", monospace;
+            font-style: normal;
+        }
+        #container_nav
+        {
+            display: grid;
+            grid-template-columns:1fr 1fr;
+            grid-template-rows: 1fr;
+        }
+        #searchNlogin
+        {
+            display: grid;
+            grid-template-columns: .5fr .1fr 1fr;
+            gap:5px;
+        }
+        .bodyb
+        {
+            background-image: url("/assets/cover.jpg");
+            background-size: cover;       /* Ensures the image covers the whole area */
+            background-position: center;   /* Centers the image */
+            background-repeat: no-repeat;
+        }
+    </style>
+    <body>
+        <div class="bodyb"> <!--nav-bar using bootstrap-->
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                    <div class="collapse navbar-collapse" id="container_nav">
+                        <div style="width: 100%;">
+                            <a class="navbar-brand" onclick="window.location.href='/';" id="titleBar" href="#">
+                                DeRel'd
+                            </a>
+                        </div>
+                        <div id="searchNlogin">
+                            <div class="Bar">
+                                <button type="button" onclick="window.location.href='/signup';" style="background-color: rgb(216, 220, 224);" class="btn btn-light Bar">
+                                    Sign Up
+                                </button>
+                            </div>
+                            <div>
+                                <button type="button" onclick="window.location.href='/login';" style="background-color: aliceblue;" class="btn btn-light Bar">
+                                    Login
+                                </button>
+                            </div>
+                                
+                            <div class="Bar">
+                                <form class="d-flex" role="search">
+                                <input class="form-control me-2 Bar" type="search" placeholder="who?" aria-label="Search">
+                                <button class="btn btn-outline-success" type="submit">Search</button>
+                                </form>
+                            </div>  
+                        </div>  
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div>
+
+        </div>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        
+        <script src="index.js" async defer></script>
+    </body>
+</html>
