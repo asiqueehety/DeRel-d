@@ -1,11 +1,12 @@
 {
-  "type": "module",
   "dependencies": {
+    "blogsite": "file:",
     "bootstrap": "^5.3.3",
     "ejs": "^3.1.10",
     "express": "^4.21.1",
     "jquery": "^3.7.1",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "path": "^0.12.7"
   },
   "name": "blogsite",
   "version": "1.0.0",

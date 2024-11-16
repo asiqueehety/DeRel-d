@@ -1,0 +1,90 @@
+#titleBar
+{
+    font-family: "Shadows Into Light", cursive;
+    font-size: 100px;
+    font-style: normal;
+}
+.Bar
+{
+    font-family: "Courier Prime", monospace;
+    font-style: normal;
+}
+#container_nav
+{
+    display: grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows: 1fr;
+}
+#searchNlogin
+{
+    display: grid;
+    grid-template-columns: .5fr .1fr 1fr;
+    gap:5px;
+}
+.bodyb
+{
+    background-image: url("/assets/cover.jpg");
+    background-size: cover;       /* Ensures the image covers the whole area */
+    background-position: center;   /* Centers the image */
+    background-repeat: no-repeat;
+}
+
+#titleBar2
+{
+    font-family: "Shadows Into Light", cursive;
+    font-size: 60px;
+    font-style: normal;
+    
+}
+.login2
+{
+    display:grid;
+    place-items: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: 2fr 1fr 1fr;
+    height: 80vh;
+}
+#logbar2
+{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap:10px;
+}
+
+#titleBar3
+{
+    font-family: "Shadows Into Light", cursive;
+    font-size: 90px;
+    font-style: normal;
+    height:30vh;
+    display: grid;
+    align-items: center;
+    
+}
+.login3
+{
+    display:grid;
+    place-self: right;
+    grid-template-columns: 1fr;
+    grid-template-rows: 2fr 1fr 1fr;
+    height: 80vh;
+    margin-left: 20vh;
+    margin-right: 120vh;
+}
+#logbar3
+{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap:10px;
+}
+
+/* custom.css */
+.navbar {
+background-image: url('assets/cover.jpg'); /* Path to your image */
+background-size: cover; /* Cover the entire navbar */
+background-position: center; /* Center the image */
+background-repeat: no-repeat; /* Prevent the image from repeating */
+height: 80px; /* Set a height for the navbar, adjust as needed */
+}
