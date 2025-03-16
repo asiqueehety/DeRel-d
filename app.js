@@ -14,7 +14,7 @@ app.set('views', path.join(__dirname, 'views')); // Adjust the path if your view
 
 
 app.get("/",(req,res)=>{
-    res.render("index")
+    res.render("index.ejs")
 })
 
 app.listen(port,()=>{
