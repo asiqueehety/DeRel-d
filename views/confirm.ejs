@@ -29,12 +29,33 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
+        <div style="background-color: #dfe9ed;">
+            <a class="navbar-brand" onclick="window.location.href='/';" id="titleBar2" href="#" style="display: grid; place-items: center;">
+                DeRel'd
+            </a>
+        </div>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div class>
 
-        </div>
+        <% if(!suc) { %>
+            <div id="confirmTitleBar">
+                <h1 style="display: grid;grid-template-rows: 1fr; justify-content: center;">
+                    PLEASE CHECK YOUR EMAIL AND TYPE IN THE NUMBER WE SENT THERE IN HERE.
+                </h1>
+                <form action="/confirmCheck" method="post" style="display: grid; grid-template-rows: 4 1;justify-content: center; font-size: 40px;">
+                    <input type="text" name="code" placeholder="Enter code here">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        <% } %>
+        <% if(suc){ %>
+            <div>
+                <p style="display: grid; place-items: center; font-size: 40px;" class=".Bar">
+                    You have successfully signed up!
+                </p>
+            </div>
+        <% } %>
         <script src="" async defer></script>
     </body>
 </html>

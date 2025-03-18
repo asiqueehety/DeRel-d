@@ -8,6 +8,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 const port = 3000
 
+var authKey='';
+var u='',p='',e='';
+
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
 
@@ -50,24 +53,61 @@ app.post("/confirm",
     {
         console.log(req.body);
 
-        const u=req.body.username;
-        const p=req.body.pw;
-        const e=req.body.email;
-        const r=req.body.retypepw;
-
+        u = req.body.username;
+        p = req.body.pw;
+        e = req.body.email;
+        r = req.body.retypepw;
         if(p!=r)
         {
             res.send
             (
                 `<script>
-                    alert("PASSWORDS DONT MATCH");
-                    window.location.href = "/signup";
+                    alert("PASSWORDS DON'T MATCH");
+                    window.location.href="/signup";
                 </script>`);
         }
         else
         {
-            
+            authKey=generateString(6);
+            console.log(authKey);
+            res.render("confirm.ejs",{suc:false});
         }
     });
 
+    app.post("/confirmCheck",
+        (req,res)=>
+        {
+            const code=req.body.code;
+            if(code==authKey)
+            {
+                res.render("confirm.ejs",{suc:true});
+                db.query("INSERT INTO users (username,emailaddress,pword) VALUES ($1,$2,$3)",[u,e,p],(err,result)=>
+                {
+                    if(err){
+                        console.log(err);
+                        res.send("Error");
+                    }
+                    else
+                    {
+                        console.log(result);
+                    }
+                });
+                u='';
+                p='';
+                e='';
+                authKey='';
+            }
+        }
+    );
+
+const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+function generateString(length) {
+    let result = '';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
 

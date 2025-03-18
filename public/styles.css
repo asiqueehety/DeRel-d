@@ -88,3 +88,14 @@ background-position: center; /* Center the image */
 background-repeat: no-repeat; /* Prevent the image from repeating */
 height: 80px; /* Set a height for the navbar, adjust as needed */
 }
+
+#confirmTitleBar
+{
+    font-family: "Shadows Into Light", cursive;
+    font-size: 60px;
+    font-style: normal;
+    display: grid;
+    grid-template-rows: 1 1;
+    height: 80vh;
+    place-items: center;
+}
