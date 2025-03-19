@@ -29,18 +29,20 @@ db.connect();
 app.use(bp.urlencoded({ extended: true }));
 
 
-
+//SHOWS THE HOME PAGE
 app.get("/",(req,res)=>{
     res.render("index.ejs")
 })
 
+//PORT RUNNING NOTIFICATION
 app.listen(port,()=>{
     console.log(`Server running on port ${port}`)
 })
 
+
 app.get("/login",(req,res)=>
 {
-    res.render("login.ejs")
+    res.render("login.ejs",{user_not_found: false, suc: false});
 })
 
 app.get("/signup",(req,res)=>
@@ -110,4 +112,65 @@ function generateString(length) {
     }
     return result;
 }
+
+// UNTIL NOW, ALL WAS ABOUT SIGN UP BACKEND DESIGN
+
+//FROM NOW ON, STARTS LOGIN BACKEND DESIGN
+
+    app.post("/login",
+        (req,res)=>
+        {
+            const en = req.body.emname;
+            const pw = req.body.password;
+            db.query("SELECT * FROM users WHERE (emailaddress = $1 or username= $1) and pword= $2 ",[en,pw],
+                (err,result)=>
+                {
+                    if(err || result.rows.length === 0)
+                    {
+                        res.render("login.ejs",{user_not_found : true, suc : false});
+                    }
+                    else
+                    {
+                        res.render("login.ejs",{user_not_found : false, suc : true});
+                    }
+                });
+        }
+    );
+    app.post("/check-availability", (req, res) => {
+        const { field, value } = req.body; // Extract field (username or email) and value
+    
+        let query = "";
+        if (field === "email")
+        {
+            query = "SELECT * FROM users WHERE emailaddress = $1";
+        }
+        else if (field === "username")
+        {
+            query = "SELECT * FROM users WHERE username = $1";
+        }
+        else
+        {
+            return res.json({ error: "Invalid field" });
+        }
+    
+        db.query(query, [value], (err, result) =>
+        {
+            if (err)
+            {
+                console.error("Database Error:", err);
+                return res.json({ error: "Database error" });
+            }
+    
+            if (result.rows.length > 0)
+            {
+                res.json({ exists: true }); // Username or email already exists
+            }
+            else
+            {
+                res.json({ exists: false }); // Available
+            }
+        });
+    });
+    
+
 

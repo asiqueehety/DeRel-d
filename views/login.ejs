@@ -36,11 +36,22 @@
                     <a class="navbar-brand" onclick="window.location.href='/';" id="titleBar2" href="#">
                         DeRel'd
                     </a>
-                    <form  id="logbar2" role="search" action="/confirm" method="get">
-                        <input class="form-control me-2 Bar" type="text" placeholder="Username" aria-label="">
-                        <input class="form-control me-2 Bar" type="password" placeholder="Password" aria-label="Search">
+                    <form  id="logbar2" role="search" action="/login" method="post">
+                        <input class="form-control me-2 Bar" type="text" placeholder="Username / Email" aria-label="" name="emname">
+                        
+                        <input class="form-control me-2 Bar" type="password" placeholder="Password" aria-label="Search" name="password">
                         <button class="btn btn-outline-success" type="submit">Login</button>
+                        <% if(user_not_found && !suc){ %>
+                            <div>
+                                <p style="color: red;" class="Bar">Invalid username or password</p>
+                            </div>
+                        <% } %>
                     </form>
+                    <% if(suc && !user_not_found){ %>
+                        <div>
+                            <p style="color: green;" class="Bar">Login successful</p>
+                        </div>
+                    <% } %>
                 </div>
             </div>
         </div>
