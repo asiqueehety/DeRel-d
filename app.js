@@ -59,21 +59,10 @@ app.post("/confirm",
         p = req.body.pw;
         e = req.body.email;
         r = req.body.retypepw;
-        if(p!=r)
-        {
-            res.send
-            (
-                `<script>
-                    alert("PASSWORDS DON'T MATCH");
-                    window.location.href="/signup";
-                </script>`);
-        }
-        else
-        {
+        
             authKey=generateString(6);
             console.log(authKey);
             res.render("confirm.ejs",{suc:false});
-        }
     });
 
     app.post("/confirmCheck",
@@ -136,6 +125,8 @@ function generateString(length) {
                 });
         }
     );
+
+    app.use(express.json());
     app.post("/check-availability", (req, res) => {
         const { field, value } = req.body; // Extract field (username or email) and value
     

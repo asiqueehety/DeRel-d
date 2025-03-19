@@ -42,47 +42,85 @@
                         <small id="email-error" class="text-danger"></small> <!-- Message will appear here -->
                         <input class="form-control me-2 Bar" name= "pw" type="password" placeholder="Password" aria-label="Password">
                         <input class="form-control me-2 Bar" name="retypepw" type="password" placeholder="Retype password" aria-label="Retype password">
-                        <button class="btn btn-outline-success" type="submit">Sign Up</button>
+                        <small id="pw-mismatch" class="text-danger"></small> <!-- Message will appear here -->
+                        <button class="btn btn-outline-success" id="submitButton" type="submit">Sign Up</button>
                     </form>
                 </div>
             </div>
         </div>
 
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                function checkAvailability(field, value)
+            async function hideSubmitButton()
+                {
+                    const un = document.querySelector("[name='username']").value.trim();
+                    const e = document.querySelector("[name='email']").value.trim();
+                    const pw = document.querySelector("[name='pw']").value.trim();
+                    const rpw = document.querySelector("[name='retypepw']").value.trim();
+
+                    const btn = document.querySelector("#submitButton");
+
+                    const empty = (un === '' || e === '' || pw === '' || rpw === '');
+                    const usernameAvailable = await checkAvailability("username", un);
+                    const emailAvailable = await checkAvailability("email", e);
+
+                    btn.disabled = empty || !usernameAvailable || !emailAvailable || !pwMatch();
+                    
+                }
+            async function checkAvailability(field, value)
                 {
                     if (value.length === 0)
                     {
                         document.getElementById(field + "-error").innerText = "";
-                        return;
+                        return false;
                     }
         
-                    fetch("/check-availability",
+                    try 
                     {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ field: field, value: value })
-                    })
-                    .then(response => response.json())
-                    .then(data =>
-                    {
+                        const response = await fetch("/check-availability",
+                        {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ field: field, value: value })
+                        });
+
+                        const data = await response.json();
                         const errorElement = document.getElementById(field + "-error");
+
                         if (data.exists) {
                             errorElement.innerText = field.charAt(0).toUpperCase() + field.slice(1) + " already in use!";
                             errorElement.style.color = "red";
-                        } else if(!data.exists) {
-                            console.log(data);
+                            return false;
+                        } else {
                             errorElement.innerText = "✓ Available";
                             errorElement.style.color = "green";
+                            return true;
                         }
-                    })
-                    .catch(error => console.error("Error:", error));
+                    } catch (error) {
+                        console.error("Error:", error);
+                        return false;
+                    }
                 }
-                document.querySelector("[name='username']").addEventListener("input", function () {checkAvailability("username", this.value);});
-                document.querySelector("[name='email']").addEventListener("input", function () {checkAvailability("email", this.value);});
-            });
-        </script>
+            function pwMatch()
+            {
+                const pw = document.querySelector("[name='pw']").value;
+                const rpw = document.querySelector("[name='retypepw']").value;
+                if(pw!==rpw){
+                    document.querySelector("#pw-mismatch").innerText = "Passwords don't match!";
+                    return false;
+                }
+                else
+                {
+                    document.querySelector("#pw-mismatch").innerText = "";
+                    return true;
+                }
+            }
+            document.querySelector("[name='username']").addEventListener("input", hideSubmitButton);
+            document.querySelector("[name='email']").addEventListener("input", hideSubmitButton);
+            document.querySelector("[name='pw']").addEventListener("input", hideSubmitButton);
+            document.querySelector("[name='retypepw']").addEventListener("input", hideSubmitButton);
+            hideSubmitButton();
+            pwMatch();
+            </script>
         
     </body>
 </html>
