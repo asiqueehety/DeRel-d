@@ -40,8 +40,15 @@
                         <small id="username-error" class="text-danger"></small> <!-- Message will appear here -->
                         <input class="form-control me-2 Bar" name="email"  type="email" placeholder="Email" aria-label="Email">
                         <small id="email-error" class="text-danger"></small> <!-- Message will appear here -->
-                        <input class="form-control me-2 Bar" name= "pw" type="password" placeholder="Password" aria-label="Password">
-                        <input class="form-control me-2 Bar" name="retypepw" type="password" placeholder="Retype password" aria-label="Retype password">
+                        <div class="input-group">
+                            <input class="form-control me-2 Bar" name= "pw" type="password" placeholder="Password" aria-label="Password">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('pw',this)">👁️</button>
+                        </div>
+                        <small id="pwSecure" class="text-danger"></small> <!-- Message will appear here -->
+                        <div class="input-group">
+                            <input class="form-control me-2 Bar" name="retypepw" type="password" placeholder="Retype password" aria-label="Retype password">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('retypepw',this)">👁️</button>
+                        </div> 
                         <small id="pw-mismatch" class="text-danger"></small> <!-- Message will appear here -->
                         <button class="btn btn-outline-success" id="submitButton" type="submit">Sign Up</button>
                     </form>
@@ -63,8 +70,7 @@
                     const usernameAvailable = await checkAvailability("username", un);
                     const emailAvailable = await checkAvailability("email", e);
 
-                    btn.disabled = empty || !usernameAvailable || !emailAvailable || !pwMatch();
-                    
+                    btn.disabled = empty || !usernameAvailable || !emailAvailable || !pwMatch() || !pwSecure();
                 }
             async function checkAvailability(field, value)
                 {
@@ -114,12 +120,48 @@
                     return true;
                 }
             }
+
+            function pwSecure()
+            {
+                const pw = document.querySelector("[name='pw']").value;
+                    if (pw.length < 8)
+                    {
+                        document.querySelector("#pwSecure").innerText = "Password must be at least 8 characters long";
+                        return false;
+                    }
+                    const re=/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()])/;
+                    if (!re.test(pw))
+                    {
+                        document.querySelector("#pwSecure").innerText = "Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character.";
+                        return false;
+                    }
+                    else
+                    {
+                        document.querySelector("#pwSecure").innerText = "";
+                        return true;
+                    }
+            }
+            function togglePassword(inputId,btn)
+            {
+                const pwInput = document.querySelector(`[name='${inputId}']`);
+                if(pwInput.type==='password')
+                {
+                    pwInput.type = 'text';
+                    btn.style.backgroundColor = 'black';
+                    btn.style.color = 'white';
+                }
+                else
+                {
+                    pwInput.type = 'password';
+                    btn.style.backgroundColor = '';
+                    btn.style.color = '';
+                }
+            }
             document.querySelector("[name='username']").addEventListener("input", hideSubmitButton);
             document.querySelector("[name='email']").addEventListener("input", hideSubmitButton);
             document.querySelector("[name='pw']").addEventListener("input", hideSubmitButton);
             document.querySelector("[name='retypepw']").addEventListener("input", hideSubmitButton);
             hideSubmitButton();
-            pwMatch();
             </script>
         
     </body>

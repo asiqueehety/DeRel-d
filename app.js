@@ -38,18 +38,15 @@ app.get("/",(req,res)=>{
 app.listen(port,()=>{
     console.log(`Server running on port ${port}`)
 })
-
-
 app.get("/login",(req,res)=>
 {
     res.render("login.ejs",{user_not_found: false, suc: false});
 })
-
 app.get("/signup",(req,res)=>
 {
     res.render("signup.ejs")
 })
-
+//sends a code into the user's email to verify his mail identity
 app.post("/confirm",
     (req,res)=>
     {
@@ -62,34 +59,38 @@ app.post("/confirm",
         
             authKey=generateString(6);
             console.log(authKey);
-            res.render("confirm.ejs",{suc:false});
+            res.render("confirm.ejs",{suc:'0'});
     });
-
-    app.post("/confirmCheck",
-        (req,res)=>
+//checks the code entered by the user 
+app.post("/confirmCheck",
+    (req,res)=>
+    {
+        const code=req.body.code;
+        if(code==authKey)
         {
-            const code=req.body.code;
-            if(code==authKey)
+            res.render("confirm.ejs",{suc:'1'});
+            db.query("INSERT INTO users (username,emailaddress,pword) VALUES ($1,$2,$3)",[u,e,p],(err,result)=>
             {
-                res.render("confirm.ejs",{suc:true});
-                db.query("INSERT INTO users (username,emailaddress,pword) VALUES ($1,$2,$3)",[u,e,p],(err,result)=>
+                if(err){
+                    console.log(err);
+                    res.send("Error");
+                }
+                else
                 {
-                    if(err){
-                        console.log(err);
-                        res.send("Error");
-                    }
-                    else
-                    {
-                        console.log(result);
-                    }
-                });
-                u='';
-                p='';
-                e='';
-                authKey='';
-            }
+                    console.log(result);
+                }
+            });
+            u='';
+            p='';
+            e='';
+            authKey='';
         }
-    );
+        else
+        {
+            res.render("confirm.ejs",{suc:'2'});
+        }
+    }
+);
 
 const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -101,6 +102,43 @@ function generateString(length) {
     }
     return result;
 }
+
+app.use(express.json());
+app.post("/check-availability", (req, res) => {
+    const { field, value } = req.body; // Extract field (username or email) and value
+
+    let query = "";
+    if (field === "email")
+    {
+        query = "SELECT * FROM users WHERE emailaddress = $1";
+    }
+    else if (field === "username")
+    {
+        query = "SELECT * FROM users WHERE username = $1";
+    }
+    else
+    {
+        return res.json({ error: "Invalid field" });
+    }
+
+    db.query(query, [value], (err, result) =>
+    {
+        if (err)
+        {
+            console.error("Database Error:", err);
+            return res.json({ error: "Database error" });
+        }
+
+        if (result.rows.length > 0)
+        {
+            res.json({ exists: true }); // Username or email already exists
+        }
+        else
+        {
+            res.json({ exists: false }); // Available
+        }
+    });
+});
 
 // UNTIL NOW, ALL WAS ABOUT SIGN UP BACKEND DESIGN
 
@@ -125,43 +163,6 @@ function generateString(length) {
                 });
         }
     );
-
-    app.use(express.json());
-    app.post("/check-availability", (req, res) => {
-        const { field, value } = req.body; // Extract field (username or email) and value
-    
-        let query = "";
-        if (field === "email")
-        {
-            query = "SELECT * FROM users WHERE emailaddress = $1";
-        }
-        else if (field === "username")
-        {
-            query = "SELECT * FROM users WHERE username = $1";
-        }
-        else
-        {
-            return res.json({ error: "Invalid field" });
-        }
-    
-        db.query(query, [value], (err, result) =>
-        {
-            if (err)
-            {
-                console.error("Database Error:", err);
-                return res.json({ error: "Database error" });
-            }
-    
-            if (result.rows.length > 0)
-            {
-                res.json({ exists: true }); // Username or email already exists
-            }
-            else
-            {
-                res.json({ exists: false }); // Available
-            }
-        });
-    });
-    
+   
 
 

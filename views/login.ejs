@@ -38,8 +38,11 @@
                     </a>
                     <form  id="logbar2" role="search" action="/login" method="post">
                         <input class="form-control me-2 Bar" type="text" placeholder="Username / Email" aria-label="" name="emname">
+                        <div class="input-group">
+                            <input class="form-control me-2 Bar" type="password" placeholder="Password" aria-label="Search" name="password">
+                            <button name="showBtn"class="btn btn-outline-secondary" type="button" onclick="togglePassword('password',this)">👁️</button>
+                        </div>
                         
-                        <input class="form-control me-2 Bar" type="password" placeholder="Password" aria-label="Search" name="password">
                         <button class="btn btn-outline-success" type="submit">Login</button>
                         <% if(user_not_found && !suc){ %>
                             <div>
@@ -56,6 +59,23 @@
             </div>
         </div>
         
-        <script></script>
+        <script>
+            function togglePassword(inputId,btn)
+            {
+                const pwInput = document.querySelector(`[name='${inputId}']`);
+                if(pwInput.type==='password')
+                {
+                    pwInput.type = 'text';
+                    btn.style.backgroundColor = 'black';
+                    btn.style.color = 'white';
+                }
+                else
+                {
+                    pwInput.type = 'password';
+                    btn.style.backgroundColor = '';
+                    btn.style.color = '';
+                }
+            }
+        </script>
     </body>
 </html>

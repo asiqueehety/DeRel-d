@@ -38,7 +38,7 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <% if(!suc) { %>
+        <% if(suc==='0') { %>
             <div id="confirmTitleBar">
                 <h1 style="display: grid;grid-template-rows: 1fr; justify-content: center;">
                     PLEASE CHECK YOUR EMAIL AND TYPE IN THE NUMBER WE SENT THERE IN HERE.
@@ -49,12 +49,17 @@
                 </form>
             </div>
         <% } %>
-        <% if(suc){ %>
+        <% if(suc==='1'){ %>
             <div>
                 <p style="display: grid; place-items: center; font-size: 40px;" class=".Bar">
                     You have successfully signed up!
                 </p>
             </div>
+        <% } %>
+        <% if(suc==='2'){ %>
+            <p style="display: grid; place-items: center; font-size: 40px;" class=".Bar">
+                YOU ENTERED THE WRONG CODE!
+            </p>
         <% } %>
         <script src="" async defer></script>
     </body>
