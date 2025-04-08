@@ -158,11 +158,22 @@ app.post("/check-availability", (req, res) => {
                     }
                     else
                     {
-                        res.render("login.ejs",{user_not_found : false, suc : true});
+                        // res.render("login.ejs",{user_not_found : false, suc : true});
+                        res.redirect('/home')
                     }
-                });
+                }
+            );
         }
     );
-   
+
+    app.use(express.static(path.join(__dirname, "client_ui", "build")));
+
+    app.get("/home", (req, res) => {
+      res.sendFile(path.join(__dirname, "client_ui", "build", "index.html"));
+    });
+    
+
+
+
 
 
