@@ -1,5 +1,6 @@
 import React from "react";
-import NavBar from "./navBar";
+import NavBar from "./NavBar";
+import Feed from "./Feed"
 
 export default function App()
 {
