@@ -5,15 +5,18 @@ export default function NavBar() {
         <div>
             <nav className="navBar">
                 <Navbartitle />
-                <div id="navBarBtn">
-                    <button className="btnn hacker"><p className="BtnTxt">Trending</p></button>
-                    <button className="btnn hacker"><p className="BtnTxt">Topics</p></button>
-                    <button className="btnn hacker"><p className="BtnTxt">Learn</p></button>
-                    <form style={{display:"grid",gridTemplateColumns:"2fr 1fr",boxSizing:'content-box'}}>
+                <div id="navBarRight">
+                    <form style={{display:"grid",gridTemplateColumns:"2fr 1fr"}}>
                         <input className="inputBar" placeholder="Search"/>
-                        <button className="btnn hacker"><img src="/resources/magnifying-glass.png" alt="" /></button>
+                        <button id="searchBtn" className="btnn hacker"><img src="/resources/magnifying-glass.png" alt="" /></button>
                     </form>
-                    <button className="btnn hacker"><img src="/resources/user.png" alt="User Profile Button" /></button> 
+                    <div id="navBarBtn">
+                        <button className="btnn hacker BtnTxt">Trending</button>
+                        <button className="btnn hacker BtnTxt">Topics</button>
+                        <button className="btnn hacker BtnTxt">Learn</button>
+                        <button className="btnn hacker BtnTxt"><img src="/resources/user.png" alt="User Profile Button" /></button> 
+                    </div>
+                    
                 </div>
             </nav>
         </div>

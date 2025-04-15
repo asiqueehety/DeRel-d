@@ -1,45 +1,83 @@
+#PaneStyler
+{
+  display: grid;
+  grid-template-columns: 0.5fr 2.5fr 1fr;
+}
+
+@font-face {
+  font-family: "WesternBangBang";
+  src: url('../public/resources/fonts/western_bang_bang/WesternBangBang-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: "RDR2";
+  src: url('../public/resources/fonts/RDR2/chinese\ rocks\ rg.otf') format('opentype');
+
+}
+
+#PaneStyler > *
+{
+  margin: 5px 1px;
+  border-radius: 15px;
+}
+
+#leftPane
+{
+  background-color: #404243;
+  display: flex;
+  flex-direction: column;
+  align-items: center ;
+  font-family: 'RDR2';
+  font-size: 20px;
+
+}
+
+#feed
+{
+  background-color: #215c69;
+}
+
+#rightPane
+{
+  background-color: #032931;
+}
+
 .navBar
 {
     color: rgb(10, 10, 57);
     display: grid;
     background-image: url("../public/resources/navbar-bg.jpeg");
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 2fr 1fr;
+    height: fit-content;
+    border-bottom-left-radius: 10px ;
+    border-bottom-right-radius: 10px ;
+    
+}
+#navBarRight
+{
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+#navBarRight > *
+{
+  height: 20px;
+  padding: 0 10px;
 }
 
 #navBarBtn
 {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
-#navbarTitle
-{
-  font-family: "Shadows Into Light", cursive;
-  font-size: 70px;
-  font-style: normal;/* Improved CSS Code */
-
-/* Navigation Bar Styles */
-.navBar {
-  color: rgb(10, 10, 57);
-  display: grid;
-  background-image: url("../public/resources/navbar-bg.jpeg");
-  grid-template-columns: 3fr 1fr;
-  padding: 1rem;
-  box-sizing: border-box;
-}
-
-#navBarBtn {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-}
 
 #navbarTitle {
   font-family: "Shadows Into Light", cursive;
-  font-size: 100px;
+  font-size: 60px;
   font-style: normal;
   color: #ffffff;
   transition: all 0.5s ease-in-out;
-  text-align: center;
 }
 
 #navbarTitle:hover {
@@ -47,35 +85,76 @@
 }
 
 .BtnTxt {
-  font-size: 2px;
-  color: #0000ff;
+  font-size: 12px;
+  color: #0b0b1d;
   font-weight: bold;
 }
 
 .inputBar {
   border-radius: 12px;
   border: none;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: "Shadows Into Light", cursive;
+  height: 30px;
   text-align: center;
   transition: all 0.3s ease-in-out;
   box-sizing: border-box;
 }
 
 .inputBar:hover {
-  box-shadow: 0 0 20px #00ff9f;
+  box-shadow: 0 0 0px #00ff9f;
+}
+
+#searchBtn
+{
+  margin: 12px 12px;
 }
 
 /* Base style for all buttons */
 .btnn {
   border: none;
-  border-radius: 0px;
+  border-radius: 20px;
   cursor: pointer;
-  transition: all 0.3s ease;
   text-align: center;
   font-weight: bold;
-  height: 1px;
-  width: 1px;
+  padding: 3px 3px;
+  margin: 4px 4px;
+  
 }
+
+/* 🧠 Dark Hacker Vibes */
+.btnn.hacker {
+  background-color: #b1a6a6 !important;
+  color: #322a2a !important;
+  font-family: monospace;
+  text-transform: lowercase;
+  font-size: 15px;
+  letter-spacing: 1px;
+  box-shadow: 0 0 10px #e5f1ed44;
+  transition: all 0.3s ease-in-out;
+}
+
+.btnn.hacker:hover {
+  background-color: #00ff9f;
+  color: #bab6b6;
+  box-shadow: 0 0 20px;
+}
+
+/* 🩶 Minimal Clean Button */
+.btnn.clean {
+  background-color:#f5f5f5;
+  color: #333;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 8px 8px;
+  transition: all 0.3s ease;
+}
+
+.btnn.clean:hover {
+  background-color:  rgb(94, 70, 61);
+  color: #bbc7c7;
+  border-color: #999;
+}
+
 
 /* 🔵 Glassmorphic Style */
 .btnn.glass {
@@ -191,41 +270,6 @@
   box-shadow: 0 6px 15px rgba(245, 87, 108, 0.5);
 }
 
-/* 🩶 Minimal Clean Button */
-.btnn.clean {
-  background-color: white;
-  color: #333;
-  border: 2px solid #ccc;
-  border-radius: 10px;
-  padding: 10px 22px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
-
-.btnn.clean:hover {
-  background-color: #f5f5f5;
-  border-color: #999;
-}
-
-/* 🧠 Dark Hacker Vibes */
-.btnn.hacker {
-  background-color: #977979;
-  color: #00ff9f;
-  border: 1px solid #00ff9f;
-  font-family: monospace;
-  text-transform: lowercase;
-  letter-spacing: 1px;
-  padding: 1px 20px;
-  margin: 40px 10px;
-  box-shadow: 0 0 10px #00ff9f44;
-  transition: all 0.3s ease;
-}
-
-.btnn.hacker:hover {
-  background-color: #00ff9f;
-  color: #0f0f0f;
-  box-shadow: 0 0 20px #00ff9f;
-}
 
 /* 🧁 Soft Pastel Button */
 .btnn.pastel {
@@ -259,243 +303,3 @@
   color: #111;
   box-shadow: 0 0 10px #ffd700aa;
 }
-  color:#ffffff;
-  transition:all 0.5s ease-in-out;
-}
-
-#navbarTitle:hover
-{
-  color: #00f0ff;
-}
-
-.BtnTxt
-{
-  font-size: 3;
-  color: #1e1e2f;
-}
-
-.inputBar
-{
-  border-radius: 12px;
-  margin: 20px 20px;
-  border: none;
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
-  text-align: center;
-  transition: all 0.3s ease-in-out;
-}
-
-.inputBar:hover
-{
-  box-shadow: 0 0 20px #00ff9f;
-}
-
-
-/* Base style for all buttons */
-.btnn {
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-}
-
-/* 🔵 Glassmorphic Style */
-.btnn.glass {
-    background: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-}
-
-/* 🔥 Gradient Glow */
-.btnn.glow {
-    background: linear-gradient(135deg, #ff416c, #ff4b2b);
-    color: white;
-    box-shadow: 0 0 10px #ff416c, 0 0 20px #ff4b2b;
-}
-
-.btnn.glow:hover {
-    box-shadow: 0 0 20px #ff416c, 0 0 40px #ff4b2b;
-}
-
-/* 🧊 Neon Blue Glow */
-.btnn.neon {
-    background: #111;
-    color: #00f0ff;
-    border: 2px solid #00f0ff;
-    text-shadow: 0 0 5px #00f0ff;
-    box-shadow: 0 0 10px #00f0ff;
-}
-
-.btnn.neon:hover {
-    box-shadow: 0 0 20px #00f0ff, 0 0 30px #00f0ff;
-    background: #000;
-}
-
-/* 🎩 Elegant Outline */
-.btnn.outline {
-    background: transparent;
-    border: 2px solid #333;
-    color: #333;
-}
-
-.btnn.outline:hover {
-    background: #333;
-    color: white;
-}
-
-/* ☁️ Soft Neumorphism */
-.btnn.neumorphic {
-    background: #e0e0e0;
-    color: #333;
-    box-shadow: 8px 8px 15px #bebebe, -8px -8px 15px #ffffff;
-}
-
-.btnn.neumorphic:hover {
-    box-shadow: inset 8px 8px 15px #bebebe, inset -8px -8px 15px #ffffff;
-}
-
-/* 🌈 Rainbow Hover */
-.btnn.rainbow {
-    background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
-    color: white;
-    background-size: 400% 400%;
-    animation: rainbowShift 5s ease infinite;
-}
-
-@keyframes rainbowShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* 🧨 Futuristic Button */
-.btnn.futuristic {
-    background: linear-gradient(90deg, #00d2ff, #3a47d5);
-    color: white;
-    border: none;
-    border-radius: 30px;
-    padding: 14px 32px;
-    font-weight: bold;
-    text-transform: uppercase;
-    box-shadow: 0 0 10px #3a47d5;
-    transition: 0.4s ease-in-out;
-  }
-  
-  .btnn.futuristic:hover {
-    background: linear-gradient(90deg, #3a47d5, #00d2ff);
-    box-shadow: 0 0 20px #00d2ff;
-    transform: scale(1.05);
-  }
-  
-  /* 🍭 Candy Pop Button */
-  .btnn.candy {
-    background: linear-gradient(45deg, #f093fb, #f5576c);
-    color: #fff;
-    border: 2px solid white;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    padding: 10px 26px;
-    transition: all 0.3s ease;
-  }
-  
-  .btnn.candy:hover {
-    background: linear-gradient(45deg, #f5576c, #f093fb);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(245, 87, 108, 0.5);
-  }
-  
-  /* 🩶 Minimal Clean Button */
-  .btnn.clean {
-    background-color: white;
-    color: #333;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    padding: 10px 22px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-  }
-  
-  .btnn.clean:hover {
-    background-color: #f5f5f5;
-    border-color: #999;
-  }
-  
-  /* 🧠 Dark Hacker Vibes */
-  .btnn.hacker {
-    background-color: #977979;
-    color: #00ff9f;
-    border: 1px solid #00ff9f;
-    font-family: monospace;
-    text-transform: lowercase;
-    letter-spacing: 1px;
-    padding: 1px 12px;
-    margin: 12px 5px;
-    box-shadow: 0 0 10px #00ff9f44;
-    transition: all 0.3s ease;
-  }
-  
-  .btnn.hacker:hover {
-    background-color: #00ff9f;
-    color: #0f0f0f;
-    box-shadow: 0 0 20px #00ff9f;
-  }
-  
-  /* 🧁 Soft Pastel Button */
-  .btnn.pastel {
-    background-color: #fceff9;
-    color: #7d5a5a;
-    border: 1px solid #ebceda;
-    border-radius: 15px;
-    padding: 12px 28px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-  }
-  
-  .btnn.pastel:hover {
-    background-color: #f8dce2;
-    color: #5a3a3a;
-  }
-  
-  /* 🖤 Elegant Black & Gold */
-  .btnn.gold {
-    background-color: #111;
-    color: #ffd700;
-    border: 2px solid #ffd700;
-    border-radius: 8px;
-    padding: 12px 26px;
-    font-size: 1rem;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .btnn.gold:hover {
-    background-color: #ffd700;
-    color: #111;
-    box-shadow: 0 0 10px #ffd700aa;
-  }
-  
-
-
-  /* nigga fun man */
-/* 
-  button1 {
-    background: #3498db;
-    color: rgb(76, 5, 5);
-    transition: 0.3s ease;
-  }
-  
-  button:hover {
-    background: #f1f3f4;
-    transform: skew(30deg, 15deg);
-  }
-  
-  button:active {
-    transform: scale(0.95);
-  }
-  
-  input:focus {
-    outline: 2px solid #6c5ce7;
-  } */
-  
