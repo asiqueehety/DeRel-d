@@ -6,7 +6,7 @@ export default function NavBar() {
             <nav className="navBar">
                 <Navbartitle />
                 <div id="navBarRight">
-                    <form style={{display:"grid",gridTemplateColumns:"2fr 1fr"}}>
+                    <form style={{display:"grid",gridTemplateColumns:"2fr 1fr",marginBottom:"20px"}}>
                         <input className="inputBar" placeholder="Search"/>
                         <button id="searchBtn" className="btnn hacker"><img src="/resources/magnifying-glass.png" alt="" /></button>
                     </form>
