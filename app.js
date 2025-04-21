@@ -4,6 +4,8 @@ const bp = require('body-parser');
 const pg = require('pg');
 const app = express();
 
+const Auth = require('./auth.js'); // Import the Auth function
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 const port = 3000
@@ -21,7 +23,7 @@ const db = new pg.Client({
   user: "postgres",
   host: "localhost",
   database: "world",
-  password: "@sique1234Ass",
+  password: Auth,
   port: 5432,
 });
 db.connect();
@@ -171,9 +173,3 @@ app.post("/check-availability", (req, res) => {
     app.get("/home", (req, res) => {
       res.sendFile(path.join(__dirname, "client_ui", "build", "index.html"));
     });
-    
-
-
-
-
-
