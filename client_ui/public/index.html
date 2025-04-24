@@ -11,4 +11,18 @@
         <div id="root">
         </div>
     </body>
+    <script>
+        window.addEventListener('scroll', function () {
+            const navBar = document.querySelector('.navBar');
+            if (window.scrollY > 0)
+            {
+                navBar.classList.add('scroll-hover');
+            }
+            else
+            {
+                navBar.classList.remove('scroll-hover');
+            }
+        });
+    </script>
+
 </html>

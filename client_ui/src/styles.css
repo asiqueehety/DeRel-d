@@ -1,8 +1,15 @@
 #PaneStyler
 {
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 1fr 5fr 1fr;
+  font-family: 'RobotoCondensed';
 }
+
+@font-face {
+  font-family: "RobotoCondensed";
+  src: url('../public/resources/fonts/Roboto_Condensed/RobotoCondensed-VariableFont_wght.ttf') format('truetype');
+}
+
 @font-face {
   font-family: "WesternBangBang";
   src: url('../public/resources/fonts/western_bang_bang/WesternBangBang-Regular.ttf') format('truetype');
@@ -24,52 +31,106 @@
   src: url('../public/resources/fonts/Navara\ Demo-Regular.otf') format('opentype');
 }
 
+#postTags
+{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+#post 
+{
+  background-color: #838d8f;
+  border-radius: 15px;
+  margin-top: 1vh;
+  margin-bottom: 5vh;
+  margin-left: 2vh;
+  margin-right: 2vh;
+  padding: 1vh 1vh;
+  box-shadow: 0 0 5px #000000;
+}
+
+#post > img
+{
+  display: block;
+  margin: auto auto;
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 0 10px #300303;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  object-fit: cover;
+}
+
+#post > img:hover
+{
+  transform: scale(0.99,0.99);
+  box-shadow: 0 0 20px #000000;
+}
+
 #PaneStyler > *
 {
-  margin: 5px 1px;
+  margin: 1vh 0.2vh;
   border-radius: 15px;
 }
 
 #leftPane
 {
   background-color: #404243;
-  display: grid;
-  flex-direction: column;
-  align-items: center ;
   font-family: 'Navara';
-  font-size: 25px;
+  font-size: 3vh;
+  height: fit-content;
+  position: sticky;
+  top: 95px;
+  z-index: 100;
+  overflow: visible;
+  box-shadow: 0 0 10px #000000;
+}
 
+#leftPane > *
+{
+  margin: 0.5vh 0.5vh;
+  border-radius: 50px;
 }
 
 #feed
 {
-  background-color: #215c69;
+  background-color: #ffffff;
 }
 
 #rightPane
 {
-  background-color: #032931;
+  background-color: #67868d;
+  height: fit-content;
+  position: sticky;
+  top: 95px;
+  overflow: visible;
+  box-shadow: 0 0 10px #000000;
 }
 
 .navBar
 {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  overflow: visible;
   color: rgb(10, 10, 57);
   display: grid;
-  background-image: url("../public/resources/navbar-bg.jpeg");
+  background-color: #2d2a2a;
   grid-template-columns: 2fr 1fr;
-  overflow: hidden;
   max-height: fit-content;
   transition: max-height 0.5s ease-in-out;
   border-bottom-left-radius: 10px ;
-  border-bottom-right-radius: 10px ;
-    
+  border-bottom-right-radius: 10px;
+  width: 100%;
+  box-shadow: 0 0 10px #000000;
 }
 
 #navBarRight
 {
   display: grid;
   grid-template-rows: 1fr 1fr;
-  
+  object-position: right;
 }
 
 #navBarRight > *
@@ -81,12 +142,20 @@
 
 .navBar:hover #navBarRight > *
 {
-  transform:scale(1,1) translateY(-10px);
-  font-size: 24px;
-  padding: 6px 10px;
-  margin: 4px 4px;
+  transform:scale(1,1) translateY(-2vh) translateX(-5vh);
+  font-size: 3vh;
+  padding: 1.2vh 2vh;
+  margin: 0.01vh 0.01vh;
   transition: all 0.3s ease-in-out;
 }
+
+.navBar:hover.scroll-hover ~ #PaneStyler #leftPane,
+.navBar:hover.scroll-hover ~ #PaneStyler #rightPane
+{
+  transform: translateY(20px);
+  transition: all 0.3s ease-in-out;
+}
+
 
 #navBarBtn
 {
@@ -99,7 +168,7 @@
   font-family: "Shadows Into Light", cursive;
   font-size: 45px;
   font-style: normal;
-  color: #ffffff;
+  color: #ead9d9;
   transition: all 0.3s ease-in-out;
 }
 
@@ -143,13 +212,12 @@
   font-weight: bold;
   padding: 3px 3px;
   margin: 4px 4px;
-  
 }
 
 /* 🧠 Dark Hacker Vibes */
 .btnn.hacker {
-  background-color: #b1a6a6 !important;
-  color: #322a2a !important;
+  background-color: #f6ebeb !important;
+  color: #312626 !important;
   font-family: 'Navara';
   text-transform: lowercase;
   font-size: 20px;
@@ -160,23 +228,23 @@
 
 .btnn.hacker:hover {
   background-color: #00ff9f;
-  color: #bab6b6;
+  color: #d3c3c3;
   box-shadow: 0 0 20px;
 }
 
 /* 🩶 Minimal Clean Button */
 .btnn.clean {
-  background-color: #f5f5f5;
-  color: #333;
-  border: 2px solid #ccc;
+  background-color: #e4dada;
+  color: #322424;
+  border: none;
   border-radius: 10px;
-  padding: 8px 8px;
+  width: 97%;
+  transition: all 1s ease-in-out;
 }
 
 .btnn.clean:hover {
-  background-color: rgb(94, 70, 61);
-  color: #bbc7c7;
-  border-color: #999;
+  transform: scale(.95);
+  border: none;
 }
 
 /* 🧨 Futuristic Button */

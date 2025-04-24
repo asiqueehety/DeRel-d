@@ -1,10 +1,13 @@
 import React from "react";
+import Post from "./Post";
 
 export default function MiddlePane()
 {
     return(
         <div id="feed">
-            <h1>Feed</h1>
+            <Post image="/resources/hasinaflees.webp" username="Nigga" date="hello"/>
+            <Post image="/resources/sextet.webp" />
+            
         </div>
     );
 }
