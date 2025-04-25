@@ -1,17 +1,16 @@
 import React from "react";
 
-export default function LeftPane()
+export default function LeftPane({ setActiveView })
 {
     return(
         <div id="leftPane">
-            <button className="btnn clean">+ Create Topic</button>
-            <button className="btnn clean">Following topics</button>
-            <button className="btnn clean">Ongoing participations</button>
-            <button className="btnn clean">Hashtags</button>
-            <button className="btnn clean">Debating Communities</button>
-            <button className="btnn clean">Live Debates</button>
-            
-            
+            <button className="btnn clean" onClick={() => setActiveView("home")}>Home</button>
+            <button className="btnn clean" onClick={() => setActiveView("createtopic")}>+ Create Topic</button>
+            <button className="btnn clean" onClick={() => setActiveView("followingtopics")}>Following topics</button>
+            <button className="btnn clean" onClick={() => setActiveView("ongoingpcp")}>Ongoing participations</button>
+            <button className="btnn clean" onClick={() => setActiveView("hashtags")}>Hashtags</button>
+            <button className="btnn clean" onClick={() => setActiveView("communities")}>Debating Communities</button>
+            <button className="btnn clean" onClick={() => setActiveView("livedebates")}>Live Debates</button>
         </div>
     )
 }

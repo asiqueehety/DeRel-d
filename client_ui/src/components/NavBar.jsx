@@ -1,6 +1,6 @@
 import React from "react";
 import Navbartitle from "./Navbar-title";
-export default function NavBar() {
+export default function NavBar({setActiveView}) {
     return (
         <nav className="navBar">
             <Navbartitle />

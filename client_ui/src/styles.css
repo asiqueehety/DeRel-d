@@ -85,6 +85,7 @@
   z-index: 100;
   overflow: visible;
   box-shadow: 0 0 10px #000000;
+  transition: all 0.3s ease-in-out;
 }
 
 #leftPane > *
@@ -93,6 +94,11 @@
   border-radius: 50px;
 }
 
+#leftPane:hover
+{
+  transform: scale(0.99,0.99);
+  transition: all 0.3s ease-in-out;
+}
 #feed
 {
   background-color: #ffffff;
