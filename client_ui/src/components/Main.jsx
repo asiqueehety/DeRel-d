@@ -19,28 +19,13 @@ export default function Main(props)
 
     function renderMiddlePane() {
       
-      if (activeView === "home") {
-        return <MiddlePane />;
-      }
-      if (activeView === "createtopic") {
-        return <CreateTopic />;
-      }
-      if (activeView === "followingtopics") {
-        return <FollowingTopics />;
-      }
-      if (activeView === "ongoingpcp") {
-        return <OngoingPcp />;
-      }
-      if (activeView === "hashtags") {
-        return <Hashtags />;
-      }
-      if (activeView === "communities") {
-        return <Communities />;
-      }
-      if (activeView === "livedebates") {
-        return <LiveDebates />;
-      }
-      
+      if (activeView === "home") {return <MiddlePane />;}
+      if (activeView === "createtopic") {return <CreateTopic />;}
+      if (activeView === "followingtopics") {return <FollowingTopics />;}
+      if (activeView === "ongoingpcp") {return <OngoingPcp />;}
+      if (activeView === "hashtags") {return <Hashtags />;}
+      if (activeView === "communities") {return <Communities />;}
+      if (activeView === "livedebates") {return <LiveDebates />;}
       // add other views later if needed
       return <MiddlePane />;
     }
