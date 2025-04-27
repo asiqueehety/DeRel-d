@@ -1,9 +1,9 @@
 import React from "react";
 import Navbartitle from "./Navbar-title";
-export default function NavBar({setActiveView}) {
+export default function NavBar({setActivePage}) {
     return (
         <nav className="navBar">
-            <Navbartitle />
+            <Navbartitle setActivePage={setActivePage}/>
             <div id="navBarRight">
                 <form style={{display:"grid",gridTemplateColumns:"2fr 1fr",marginBottom:"20px"}}>
                     <input className="inputBar" placeholder="Search"/>
@@ -13,7 +13,7 @@ export default function NavBar({setActiveView}) {
                     <button className="btnn hacker BtnTxt">Trending</button>
                     <button className="btnn hacker BtnTxt">Topics</button>
                     <button className="btnn hacker BtnTxt">Learn</button>
-                    <button className="btnn hacker BtnTxt"><img src="/resources/user.png" alt="User Profile Button" /></button> 
+                    <button className="btnn hacker BtnTxt" onClick={() => setActivePage("profile")}><img src="/resources/user.png" alt="User Profile Button" /></button> 
                 </div>
                 
             </div>

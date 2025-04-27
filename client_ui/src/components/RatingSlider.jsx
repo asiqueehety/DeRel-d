@@ -13,7 +13,7 @@ export default function RatingSlider({onChange})
 
     return(
         <div>
-            <input type="range" min="-10" max="10" step="0.1" className="slider" id="myRange" onChange={handleSliderChange} value={rating}/>
+            <input type="range" min="-10" max="10" step="0.1" className="slider" id="ratingSlider" onChange={handleSliderChange} value={rating}/>
         </div>
     )
 }

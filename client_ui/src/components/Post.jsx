@@ -23,19 +23,23 @@ export default function Post(props)
 
     return(
         <div id="post">
-            <h2>{props.title}</h2>
+            <h2 id="topicTitle" >{props.title}</h2>
             <img src={props.image} alt="Post" />
-            <p>{props.description}</p>
-            <div id="postTags">
-                <button className="btnn hacker BtnTxt">Like</button>
-                <div className="btnn hacker BtnTxt" id="sliderBtn" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} >
-                    {showSlider ? <RatingSlider onChange={handleRatingChange}/> : rating}
-                </div>
-                <button className="btnn hacker BtnTxt">Comment</button>
+            <p id="topicHtags">
+                {props.hashtags.map((hashtag, index) => (
+                    <button key={index} className="hashtag">{hashtag}</button>
+                ))}
+            </p>
+            <p id="topicDesc">{props.description}</p>
+            <div id="sliderBtn" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} >
+                {showSlider ? <RatingSlider onChange={handleRatingChange}/> : rating}
             </div>
-            <p>Posted by: <strong>{props.username}</strong></p>
-            <p>Posted on: <strong>{props.date}</strong></p>
-
+            <div id="postTags">
+                <button className="btnn hacker BtnTxt">Follow</button>
+                <button className="btnn hacker BtnTxt">Create Thread</button>
+            </div>
+            <p id="topicUname">Posted by: <strong>{props.username}</strong></p>
+            <p id="topicDate">Posted on: <strong>{props.date}</strong></p>
         </div>
     )
 }

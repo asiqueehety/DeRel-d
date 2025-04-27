@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function Navbartitle({setActiveView})
+export default function Navbartitle({setActivePage})
 {
     return(
         <div id='navbarTitle'>    
-            <p>DeRel'D</p>
+            <p onClick={() => setActivePage("home")}>DeRel'D</p>
         </div>
     )
 }

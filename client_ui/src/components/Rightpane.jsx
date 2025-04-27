@@ -4,7 +4,7 @@ export default function RightPane()
 {
     return(
         <div id="rightPane">
-            <h1>Right Pane</h1>
+            <h1>Live Notifications</h1>
         </div>
     )
 }

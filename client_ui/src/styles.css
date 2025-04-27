@@ -31,10 +31,163 @@
   src: url('../public/resources/fonts/Navara\ Demo-Regular.otf') format('opentype');
 }
 
+#topicUname
+{
+  text-align: center;
+  text-shadow: #0b0b1d;
+  font-size: 3vh;
+  width: fit-content;
+  margin-top: 2vh;
+  margin-right: 1vh;
+  padding-right: 1vh;
+  padding-left: 1vh;
+  border-radius: 15px;
+  letter-spacing: 0px;
+  background-color: rgb(61, 52, 52);
+  color: #cbb9b9;
+  box-shadow: 0 0 10px #333131;
+}
+
+#topicHtags
+{
+  margin-top: 1vh;
+}
+
+#topicHtags > *
+{
+  font-family: 'Navara';
+  text-shadow: #0b0b1d;
+  font-size: 2.5vh;
+  width: fit-content;
+  margin-top: 1vh;
+  margin-right: 1vh;
+  padding-right: 1vh;
+  padding-left: 1vh;
+  border-radius: 15px;
+  letter-spacing: 0px;
+  background-color: lightgray;
+  box-shadow: 0 0 10px #333131;
+  transition: all 0.3s ease-in-out;
+}
+
+#topicHtags > *:hover{
+  background-color: #0f3426;
+  box-shadow: 0 0 10px #817c7c;
+  color: #e3d3d3;
+  cursor: pointer;
+}
+
+#topicTitle
+{
+  font-family: 'RDR2';
+  text-align: center;
+  text-shadow: #0b0b1d;
+  font-size: 7vh;
+  border-radius: 15px;
+  letter-spacing: 0px;
+  background-color: lightgray;
+  box-shadow: 0 0 10px #333131;
+  transition: all 0.3s ease-in-out;
+}
+#topicDesc
+{
+  font-family: 'RobotoCondensed';
+  text-shadow: #0b0b1d;
+  font-size: 2vh;
+  letter-spacing: 1px;
+  text-align: justify;
+  margin-top: 2vh;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  padding-left: 2vh;
+  padding-right: 2vh;
+  border-radius: 15px;
+  border: none;
+  background-color: lightgray;
+  box-shadow: 0 0 10px #333131;
+  transition: all 0.3s ease-in-out;
+}
+
+#sliderBtn
+{
+  width: 80%;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  padding: 8px 5px;
+  margin: 0 auto;
+  background-color: #ffd8d8 !important;
+  font-family: 'RobotoCondensed';
+  text-transform: lowercase;
+  font-size: 2vh;
+  letter-spacing: 1px;
+  box-shadow: 0 0 10px #333131;
+  transition: all 0.3s ease-in-out;
+}
+
+#sliderBtn:hover
+{
+  background-color: #052c1f !important;
+  box-shadow: 0 0 10px #3f1c1c !important;
+  transform: scale(1.03);
+}
+
+#ratingSlider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 18px;
+  background: #838d8f;
+  border-radius: 5px;
+  outline: none;
+  opacity: 0.9;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Chrome, Safari, Edge, Opera */
+#ratingSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 23px;
+  height: 24px;
+  background: url('../public/resources/star2.png') no-repeat center center;
+  background-size: contain;
+  cursor: pointer;
+  border: none;
+}
+
+/* Firefox */
+#ratingSlider::-moz-range-thumb {
+  width: 23px;
+  height: 24px;
+  background: url('../public/resources/star2.png') no-repeat center center;
+  background-size: contain;
+  cursor: pointer;
+  border: none;
+}
+
 #postTags
 {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+}
+
+#postTags > * {
+  width: 10vh;
+  height: 7vh;
+  margin: 10px auto;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 5px #764949;
+}
+
+#postTags > *:hover {
+  color: rgb(236, 225, 225) !important;
+  background-color: rgb(71, 45, 45) !important;
+  box-shadow: 0 0 10px #454343 !important;
+  transform: scale(.95);
 }
 
 #post 
@@ -47,6 +200,12 @@
   margin-right: 2vh;
   padding: 1vh 1vh;
   box-shadow: 0 0 5px #000000;
+  transition: all 0.3s ease-in-out;
+}
+
+#post:hover
+{
+  transform: scale(1.003);
 }
 
 #post > img
@@ -178,6 +337,12 @@
   transition: all 0.3s ease-in-out;
 }
 
+#navbarTitle:hover {
+  color: #c4ccc9;
+  text-shadow: 0 0 10px #3e3636;
+  cursor: pointer;
+}
+
 .navBar:hover #navbarTitle {
   font-size: 60px;
 }
@@ -186,6 +351,7 @@
   font-size: 12px;
   color: #0b0b1d;
   font-weight: bold;
+  text-align: center;
 }
 
 .inputBar {
@@ -225,7 +391,7 @@
   background-color: #f6ebeb !important;
   color: #312626 !important;
   font-family: 'RobotoCondensed';
-  text-transform: lowercase;
+  text-align: center;
   font-size: 2vh;
   letter-spacing: 1px;
   box-shadow: 0 0 10px #cfc5c5;

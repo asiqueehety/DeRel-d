@@ -9,11 +9,13 @@ import OngoingPcp from "./OngoingPcp";
 import Hashtags from "./Hashtags";
 import Communities from "./Communities";
 import LiveDebates from "./LiveDebates";
+import Profile from "./Profile";
 
 
 export default function Main(props)
 {
     const [activeView, setActiveView] = useState("home");
+    const [activePage, setActivePage] = useState("home");
 
 
 
@@ -30,13 +32,37 @@ export default function Main(props)
       return <MiddlePane />;
     }
 
+    function renderPage() {
+        switch (activePage) {
+            case "home":
+                return(
+                    <>
+                        <LeftPane setActiveView={setActiveView} />
+                        {renderMiddlePane()}
+                        <RightPane />
+                    </>
+                )
+            case "profile":
+                return(
+                    <Profile />
+                )
+
+            default:
+                return(
+                    <>
+                        <LeftPane setActiveView={setActiveView} />
+                        {renderMiddlePane()}
+                        <RightPane />
+                    </>
+                )
+        }
+    }
+
     return (
         <div>
-            <NavBar />
+            <NavBar setActivePage={setActivePage}/>
             <div id="PaneStyler">
-                <LeftPane setActiveView={setActiveView} />
-                {renderMiddlePane()}
-                <RightPane />
+                {renderPage()}
             </div>
         </div>
     )
