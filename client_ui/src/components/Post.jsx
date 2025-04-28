@@ -37,9 +37,14 @@ export default function Post(props)
             <div id="postTags">
                 <button className="btnn hacker BtnTxt">Follow</button>
                 <button className="btnn hacker BtnTxt">Create Thread</button>
+                <button className="btnn hacker BtnTxt">Threads</button>
             </div>
-            <p id="topicUname">Posted by: <strong>{props.username}</strong></p>
-            <p id="topicDate">Posted on: <strong>{props.date}</strong></p>
+            <div id="topicInfo">
+                <button id="topicUname"><strong>{props.username}</strong></button>
+                <button id="topicDate"><strong>{props.date}</strong></button>
+                <button id="topicTime"><strong>{props.time}</strong></button>
+                <button id="topicLocation"><strong>{props.location}</strong></button>
+            </div>
         </div>
     )
 }
