@@ -38,7 +38,9 @@ export default function Main(props)
                 return(
                     <>
                         <LeftPane setActiveView={setActiveView} />
-                        {renderMiddlePane()}
+                        <div id="MiddlePaneStyler">
+                            {renderMiddlePane()}
+                        </div>
                         <RightPane />
                     </>
                 )

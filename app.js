@@ -5,6 +5,7 @@ const pg = require('pg');
 const app = express();
 
 const Auth = require('./auth.js'); // Import the Auth function
+const { log } = require('console');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -146,6 +147,8 @@ app.post("/check-availability", (req, res) => {
 
 //FROM NOW ON, STARTS LOGIN BACKEND DESIGN
 
+var userId;
+
     app.post("/login",
         (req,res)=>
         {
@@ -161,6 +164,9 @@ app.post("/check-availability", (req, res) => {
                     else
                     {
                         // res.render("login.ejs",{user_not_found : false, suc : true});
+                        userId = result.rows[0].id; // user ID in database
+                        console.log("User ID:", userId); // Log the user ID for debugging
+                        
                         res.redirect('/home')
                     }
                 }
@@ -172,4 +178,51 @@ app.post("/check-availability", (req, res) => {
 
     app.get("/home", (req, res) => {
       res.sendFile(path.join(__dirname, "client_ui", "build", "index.html"));
+    });
+
+
+// HERE NOW, WE DESIGN BACKEND FOR THE MAIN WEBSITE
+
+app.post("/createTopic",
+    (req, res) => 
+    {
+        var user1 = {}; // Initialize user1 as an empty object
+        db.query("SELECT * FROM users WHERE id = $1", [userId], (err, result) => {
+            if (err) {
+                console.error("Database Error:", err);
+                return res.status(500).send("Database error nigga");
+            }
+
+            if (result.rows.length === 0) {
+                return res.status(404).send("User not found");
+            }
+
+            user1 = result.rows[0];
+            console.log(user1); // Log the user object to see its properties
+        });
+
+        const title = req.body.title;
+        const desc = req.body.description;
+        const hashtags = req.body.hashtags;
+        const image = req.body.image; // Assuming you handle image upload separately
+        const userid = userId; // Use the userId variable from the login process
+        const date = new Date().toISOString(); // Get the current date and time
+        const location = user1.location; // Assuming you have a location field in the user object
+        const created_at = new Date().toISOString(); // Get the current date and time
+        const updated_at = new Date().toISOString(); // Get the current date and time
+
+        db.query
+        (
+            "INSERT INTO posts (title, description, image, user_id, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6)",
+            [title, desc, image, userid, created_at, updated_at],
+            (err) => {
+                if (err) {
+                    console.error("Database Error:", err);
+                    return res.status(500).send("Database error");
+                }
+                
+                res.redirect('/home'); // Redirect to the home page after successful topic creation
+                res.status(200).send("Topic created successfully");
+            }
+        );
     });
