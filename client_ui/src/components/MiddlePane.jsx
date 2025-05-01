@@ -3,14 +3,37 @@ import Post from "./Post";
 
 export default function MiddlePane()
 {
-
-    const desc1="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis augue placerat, dictum purus eu, luctus nunc. Donec in sem ipsum. Maecenas sollicitudin imperdiet sem, in aliquet mauris consectetur pretium. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer facilisis sapien ipsum, non fermentum ex consequat eget. Proin dictum posuere augue. Cras efficitur venenatis dolor sed mattis. Quisque at neque tempus, facilisis magna consectetur, imperdiet nunc. Cras aliquam accumsan lacus quis ullamcorper. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris sed massa quis nisi convallis efficitur bibendum ut lorem. Proin ut congue purus. Vivamus nec est sit amet ex sagittis blandit. Phasellus ultricies vehicula leo in maximus.In malesuada tellus ex, sed porttitor diam tincidunt a. Donec suscipit eget lacus id dapibus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean et fermentum justo. Quisque maximus neque est, sed gravida sapien fringilla et. Quisque eu ullamcorper sem. In non purus vel nibh sagittis pretium non in nisl. Aenean placerat scelerisque magna at venenatis. Nullam consectetur, nisi at rutrum accumsan, ex nibh finibus enim, ut dictum orci est ut tortor. Vestibulum tristique dictum lectus, id tempor enim. Donec massa quam, imperdiet in neque nec, pharetra malesuada urna. Maecenas ac eros in lorem varius convallis. Cras porta lacinia orci et rhoncus. Cras in efficitur sapien. Sed nunc magna, euismod quis cursus vitae, finibus quis risus. Curabitur ut lectus eu elit volutpat maximus. Nulla iaculis velit vitae purus elementum cursus. Aliquam at neque augue. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi augue quam, facilisis sed libero sed, tincidunt hendrerit risus. Nam tempus auctor massa. Maecenas fringilla mi nec imperdiet porta. Pellentesque condimentum molestie sagittis. Nulla eu ipsum eget nulla facilisis gravida eget a felis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vel lacinia nunc, sed fringilla turpis. Fusce a maximus felis, a tincidunt massa. Donec fringilla est id justo mollis rutrum. Nam arcu tellus, sagittis id risus at, vehicula ultrices dui. Vivamus sit amet nisl tristique, luctus nisl in, pellentesque dolor. Sed ornare nisi id congue consequat. Maecenas rhoncus, nibh vitae maximus dignissim, justo augue mattis enim, at placerat nisi enim pretium neque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Phasellus sed urna vel lacus pharetra pharetra. Nunc elit neque, pharetra eu mattis ut, porttitor vel velit. Proin malesuada metus ex, ac luctus augue maximus eget. Nullam at enim eu odio sodales dictum. Nullam vitae auctor massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce accumsan ullamcorper nisl non rhoncus. Suspendisse congue nisl in libero sagittis, in lobortis enim auctor. Ut vulputate nulla ac leo malesuada pulvinar. Etiam ultrices leo ut aliquet volutpat."
-    const desc2="জীবের মধ্যে সবচেয়ে সম্পূর্ণতা মানুষের। কিন্তু সবচেয়ে অসম্পূর্ণ হয়ে সে জন্মগ্রহণ করে। বাঘ ভালুক তার জীবনযাত্রার পনেরো- আনা মূলধন নিয়ে আসে প্রকৃতির মালখানা থেকে। জীবরঙ্গভূমিতে মানুষ এসে দেখা দেয় দুই শূন্য হাতে মুঠো বেঁধে। মানুষ আসবার পূর্বেই জীবসৃষ্টিযজ্ঞে প্রকৃতির ভূরিব্যয়ের পালা শেষ হয়ে এসেছে। বিপুল মাংস, কঠিন বর্ম, প্রকাণ্ড লেজ নিয়ে জলে স্থলে পৃথুল দেহের যে অমিতাচার প্রবল হয়ে উঠেছিল তাতে ধরিত্রীকে দিলে ক্লান্ত করে। প্রমাণ হল আতিশয্যের পরাভব অনিবার্য। পরীক্ষায় এটাও স্থির হয়ে গেল যে, প্রশ্রয়ের পরিমাণ যত বেশি হয় দুর্বলতার বোঝাও তত দুর্বহ হয়ে ওঠে। নূতন পর্বে প্রকৃতি যথাসম্ভব মানুষের বরাদ্দ কম করে দিয়ে নিজে রইল নেপথ্যে। মানুষকে দেখতে হল খুব ছোটো, কিন্তু সেটা একটা কৌশল মাত্র। এবারকার জীবযাত্রার পালায় বিপুলতাকে করা হল বহুলতায় পরিণত। মহাকায় জন্তু ছিল প্রকাণ্ড একলা, মানুষ হল দূরপ্রসারিত অনেক।"
+    const desc1 = 
+        "\"The July Revolution of Bangladesh: A New Dawn of Democratic Awakening\"\n\n" +
+        "Throughout history, revolutions have served as the turning points of nations—moments when ordinary people rise against oppression, demanding justice, equality, and liberty. \n" +
+        "The July Revolution of Bangladesh, though not widely chronicled in global narratives, marked a bold chapter in the nation's socio-political journey. It was a time when voices silenced by years of systemic neglect erupted into a unified cry for transformation.\n\n" +
+        "Background and Causes:\n" +
+        "In the early 21st century, Bangladesh witnessed rising discontent fueled by corruption, youth unemployment, and a faltering education system. \n" +
+        "July's flame was lit when widespread frustration found a matchstick in a national scandal involving public sector recruitment and political favoritism. \n" +
+        "Students, the heartbeat of the nation, took to the streets demanding transparency, justice, and a voice in shaping their future.\n\n" +
+        "The Movement Unfolds:\n" +
+        "From the buzzing roads of Dhaka to the quiet campuses of Rajshahi, a wave of protest swept the nation. \n" +
+        "Social media became the new battleground—Facebook posts, Twitter hashtags, and viral videos carried the revolution's soul across the globe. \n" +
+        "This uprising wasn't violent. It was peaceful, passionate, and poetic. Marches, debates, sit-ins, and candlelight vigils defined its spirit. \n\n" +
+        "Government Response and Turning Point:\n" +
+        "Initially, the administration responded with silence, then suppression. But neither water cannons nor curfews could extinguish the people's fire. \n" +
+        "With international attention building, the government relented. Key officials resigned, and policy discussions began. \n" +
+        "A national dialogue was initiated, for the first time including students and civil society at the decision-making table.\n\n" +
+        "Legacy and Impact:\n" +
+        "The July Revolution did not just alter laws—it reshaped consciousness. \n" +
+        "It redefined patriotism, inspired new leaders, and taught an entire generation that peaceful resistance has power. \n" +
+        "Universities became hubs of activism, journalism found new courage, and governance slowly shifted toward accountability.\n\n" +
+        "Conclusion:\n" +
+        "The July Revolution of Bangladesh is a story of courage, clarity, and collective will. \n" +
+        "It reminds us that revolutions aren't always violent storms—they can also be powerful tides that rise with hope. \n" +
+        "Even today, its echoes remain in every civic act, every youth-led movement, and every Bangladeshi heart that dares to dream of a better tomorrow.\n";
+    const desc2=
+    "নিঃসন্দেহে ২০০৮-০৯ মৌসুম ছিল এফসি বার্সেলোনার ইতিহাসের সবচেয়ে গৌরবময় এবং স্মরণীয় সময়। এই মৌসুমে ক্লাবটি “সেক্সটপল” বা ছয়টি ট্রফি জয়ের অসাধারণ কীর্তি গড়েছিল, যা ফুটবল ইতিহাসে এক বিরল অর্জন। তৎকালীন নতুন কোচ পেপ গার্দিওলার অধীনে বার্সা জিতেছিল লা লিগা, কোপা দেল রে, উয়েফা চ্যাম্পিয়ন্স লিগ, স্প্যানিশ সুপার কাপ, উয়েফা সুপার কাপ এবং ফিফা ক্লাব বিশ্বকাপ—এই ছয়টি বড় শিরোপা। লিওনেল মেসি, আন্দ্রেস ইনিয়েস্তা, জাভি হার্নান্দেজ এবং কার্লেস পুয়োলদের দুর্দান্ত পারফরম্যান্সে বার্সেলোনা মাঠে শিল্পের মতো ফুটবল খেলেছিল, যার নাম পরে 'টিকি-টাকা' রূপে বিশ্বজুড়ে পরিচিত হয়। ২০০৯ সালের এই হেক্সা জয়ের মৌসুম শুধু ট্রফির সংখ্যাতেই নয়, বরং ফুটবলের সৌন্দর্য, দলগত সমন্বয় এবং শ্রেষ্ঠত্বের একটি অনন্য নিদর্শন হিসেবে ইতিহাসে স্বর্ণাক্ষরে লেখা থাকবে।"
     const hashtags1=["#lorem","#ipsum","#dolor","#sit","#amet","#consectetur"];
     const hashtags2=["#barca","#football","#sports","#history","#legendary","#messi"];
     return(
         <div id="feed">
-            <Post title="Lorem Ipsum" image="/resources/hasinaflees.webp" username="Nigga" date="hello" description={desc1} hashtags={hashtags1}/>
+            <Post title="The July Revolution of Bangladesh: A New Dawn of Democratic Awakening" image="/resources/hasinaflees.webp" username="Nigga" date="hello" description={desc1} hashtags={hashtags1}/>
             <Post image="/resources/sextet.webp" title="বার্সা, একটি ইতিহাস" description={desc2} hashtags={hashtags2}/>
             
         </div>

@@ -3,6 +3,14 @@ const path = require('path'); // Change import to require
 const bp = require('body-parser');
 const pg = require('pg');
 const app = express();
+const session = require('express-session');
+
+app.use(session({
+  secret: 'ni99a', // replace with a secure random string
+  resave: false,
+  saveUninitialized: false
+}));
+
 
 const Auth = require('./auth.js'); // Import the Auth function
 const { log } = require('console');
@@ -147,7 +155,16 @@ app.post("/check-availability", (req, res) => {
 
 //FROM NOW ON, STARTS LOGIN BACKEND DESIGN
 
-var userId;
+
+
+function requireLogin(req, res, next) {
+    if (!req.session.userId) {
+      return res.redirect("/login");
+    }
+    next();
+  }
+  
+
 
     app.post("/login",
         (req,res)=>
@@ -164,8 +181,8 @@ var userId;
                     else
                     {
                         // res.render("login.ejs",{user_not_found : false, suc : true});
-                        userId = result.rows[0].id; // user ID in database
-                        console.log("User ID:", userId); // Log the user ID for debugging
+                        req.session.userId = result.rows[0].id; // user ID in database
+                        console.log("User ID:", req.session.userId); // Log the user ID for debugging
                         
                         res.redirect('/home')
                     }
@@ -176,16 +193,17 @@ var userId;
 
     app.use(express.static(path.join(__dirname, "client_ui", "build")));
 
-    app.get("/home", (req, res) => {
+    app.get("/home", requireLogin, (req, res) => {
       res.sendFile(path.join(__dirname, "client_ui", "build", "index.html"));
     });
 
 
 // HERE NOW, WE DESIGN BACKEND FOR THE MAIN WEBSITE
 
-app.post("/createTopic",
+app.post("/createTopic", requireLogin,
     (req, res) => 
     {
+        const userId = req.session.userId; // Use the userId variable from the login process
         var user1 = {}; // Initialize user1 as an empty object
         db.query("SELECT * FROM users WHERE id = $1", [userId], (err, result) => {
             if (err) {
@@ -204,8 +222,7 @@ app.post("/createTopic",
         const title = req.body.title;
         const desc = req.body.description;
         const hashtags = req.body.hashtags;
-        const image = req.body.image; // Assuming you handle image upload separately
-        const userid = userId; // Use the userId variable from the login process
+        const image = "/resources/"+(req.body.image); // Assuming you handle image upload separately
         const date = new Date().toISOString(); // Get the current date and time
         const location = user1.location; // Assuming you have a location field in the user object
         const created_at = new Date().toISOString(); // Get the current date and time
@@ -214,15 +231,47 @@ app.post("/createTopic",
         db.query
         (
             "INSERT INTO posts (title, description, image, user_id, created_at, updated_at) VALUES ($1, $2, $3, $4, $5, $6)",
-            [title, desc, image, userid, created_at, updated_at],
+            [title, desc, image, userId, created_at, updated_at],
             (err) => {
                 if (err) {
                     console.error("Database Error:", err);
                     return res.status(500).send("Database error");
                 }
+                db.query("SELECT * FROM posts WHERE title = $1", [title], (err, result) =>
+                {
+                    if (err) {
+                        console.error("Database Error:", err);
+                        return res.status(500).send("Database error");
+                    }
+
+                    if (result.rows.length === 0) {
+                        return res.status(404).send("Post not found after insertion");
+                    }
+
+                    const post = result.rows[0];
+                    console.log(post);
+                });
+                
                 
                 res.redirect('/home'); // Redirect to the home page after successful topic creation
-                res.status(200).send("Topic created successfully");
             }
         );
+    });
+
+
+    app.get("/api/profile", requireLogin, (req, res) => {
+        const userId = req.session.userId; // Get the user ID from the request parameters
+        db.query("SELECT * FROM users WHERE id = $1", [userId], (err, result) => {
+            if (err) {
+                console.error("Database Error:", err);
+                return res.status(500).send("Database error");
+            }
+
+            if (result.rows.length === 0) {
+                return res.status(404).send("User not found");
+            }
+
+            const user = result.rows[0];
+            res.json(user); // Send the user data as JSON response
+        });
     });

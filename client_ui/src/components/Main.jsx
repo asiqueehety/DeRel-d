@@ -46,6 +46,7 @@ export default function Main(props)
                 )
             case "profile":
                 return(
+                    
                     <Profile />
                 )
 
