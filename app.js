@@ -17,7 +17,7 @@ const { log } = require('console');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-const port = 3000
+const port = 4000
 
 var authKey='';
 var u='',p='',e='';
@@ -261,7 +261,7 @@ app.post("/createTopic", requireLogin,
 
     app.get("/api/profile", requireLogin, (req, res) => {
         const userId = req.session.userId; // Get the user ID from the request parameters
-        db.query("SELECT * FROM users WHERE id = $1", [userId], (err, result) => {
+        db.query("select users.*, posts.* from users inner join posts on users.id=posts.user_id where users.id= $1 ;", [userId], (err, result) => {
             if (err) {
                 console.error("Database Error:", err);
                 return res.status(500).send("Database error");
@@ -271,7 +271,7 @@ app.post("/createTopic", requireLogin,
                 return res.status(404).send("User not found");
             }
 
-            const user = result.rows[0];
-            res.json(user); // Send the user data as JSON response
+            const user = result.rows;
+            res.json(user);
         });
     });

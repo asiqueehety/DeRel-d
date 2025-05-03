@@ -31,6 +31,169 @@
   src: url('../public/resources/fonts/Navara\ Demo-Regular.otf') format('opentype');
 }
 
+#profileTop
+{
+  text-align: center;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background-color: #274538;
+  color: #ffffff;
+}
+
+#createdTopicsTitle
+{
+  text-align: center;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background-color: #274538;
+  color: #ffffff;
+  font-size: 4vh;
+  margin-top: 2vh;
+  margin-right: 2vh;
+}
+
+#profileContainer
+{
+  width: 98vw;
+}
+
+#profilePage
+{
+  display: grid;
+  grid-template-columns: 3fr 5fr 3fr;
+  margin-top: 2vh;
+}
+
+#profilePage > *
+{
+  margin-left: 2vh;
+  margin-right: 2vh;
+}
+
+#profileExtras
+{
+  background-color: #b6c4be;
+  border-radius: 15px;
+  box-shadow: 0 0 10px #938484;
+}
+
+#profileStats
+{
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  background-color: #b6c4be;
+  box-shadow: 0 0 10px #938484;
+  border-radius: 15px;
+
+}
+
+#profileCard
+{
+  display: grid;
+  grid-template-rows: 5fr 0.5fr 0.5fr 0.5fr;
+
+  background-color: #b6c4be;
+  border-radius: 15px;
+  box-shadow: 0 0 10px #938484;
+
+}
+
+#profileCard > *
+{
+  border-radius: 15px;
+  background-color: #838d8f;
+  box-shadow: 0 0 10px #000000;
+  margin-left: 2vh;
+  margin-right: 2vh;
+}
+
+#profilePic
+{
+  width: 20vw;
+  max-width: 200px;
+  height: auto;
+  margin-top: 2vh;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 20px;
+  box-shadow: 0 0 10px #300303;
+  transition: all 0.3s ease-in-out;
+}
+
+#topicCard
+{ 
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  margin-top: 1vh;
+  margin-bottom: 2vh;
+  margin-right: 2vh;
+  margin-left: 2vh;
+  color: #000000;
+  background-color: #838d8f;
+  border-radius: 15px;
+  width: 95vw;
+  height: fit-content;
+  box-shadow: 0 0 5px #000000;
+  transition: all 0.3s ease-in-out;
+}
+#topicCard:hover
+{
+  transform: scale(0.99);
+  box-shadow: 0 0 10px #000000;
+}
+
+#topicCardImg
+{
+  /* width: 100%;
+  max-width: 300px;
+  height: auto;
+  aspect-ratio: 2/1; */
+  width: 25vh;
+  height: 25vh;
+  border-radius: 15px;
+  box-shadow: 0 0 10px #300303;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  object-fit: cover;
+}
+
+#topicCardContent
+{
+  display: grid;
+  grid-template-rows: 0.5fr 2fr 0.5fr;
+  margin-left: 1vh;
+}
+
+#topicCardTitle
+{
+  font-family: 'RDR2';
+  text-align: center;
+  text-shadow: #0b0b1d;
+  font-size: 2.5vh;
+  border-radius: 15px;
+  background-color: lightgray;
+  box-shadow: 0 0 10px #333131;
+  transition: all 0.3s ease-in-out;
+}
+
+#topicCardDescription
+{
+  background-color: #00ff9f;
+  box-shadow: 0 0 10px #333131;
+  border-radius: 20px;  
+  font-family: 'RobotoCondensed';
+  text-shadow: #0b0b1d;
+  font-size: 2vh;
+  letter-spacing: 1px;
+  padding-left: 2vh;
+}
+
+
+#topicCardHashtags
+{
+  height: fit-content;
+}
+
 #MiddlePaneStyler
 {
   margin-top: 1vh;
@@ -541,3 +704,22 @@
   transform: scale(1.05);
 }
 
+
+
+
+@media (max-width: 900px) {
+  #profilePage {
+    grid-template-columns: 1fr;
+  }
+
+  #profilePage > * {
+    margin-left: 1vh;
+    margin-right: 1vh;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+  }
+
+  #profilePic {
+    width: 40vw; /* Adjust as needed for mobile */
+  }
+}
