@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from "react";
 import TopicCard from "./TopicCard";
 import MainProfile from "./mainProfile";
+import ProfileExtras from "./ProfileExtras";
+import ProfileStats from "./ProfileStats";
 
-
-export default function Profile() {
-
-
-    const [profile, setProfile] = useState(null);
+export default function Profile()
+{
+    const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
-    const [posts, setPosts] = useState(null);
 
     useEffect(() => {
         fetch("/api/profile")
@@ -17,7 +16,7 @@ export default function Profile() {
                 return res.json();
             })
             .then(data => {
-                setProfile(data);
+                setUser(data);
             })
             .catch(err => {
                 console.error(err);
@@ -29,39 +28,37 @@ export default function Profile() {
         return <p>{error}</p>;
     }
 
-    if (!profile) {
+    if (!user) {
         return <p>Loading profile...</p>;
     }
 
-    const username = profile[0].username;
-    const email = profile[0].emailaddress;
-    const location = profile[0].location;
-    const dp = profile[0].pro_picture;
+    // const profile = [
+
+
+//];
+
+
+    const username = user.profile.username;
+    const email = user.profile.emailaddress;
+    const location = user.profile.location;
+    const dp = user.profile.pro_picture;
+    const bio = user.profile.bio;
+    const interests = user.interests;
 
     return (
         <div id="profileContainer">
             <div id="profilePage">
                 <MainProfile dp={dp} uname={username} email={email} location={location} />
-                <div id="profileExtras">
-                    <h2>Bio</h2>
-                    <p>Ami onek bhalo chele. Tomra shobai kharap.</p>
-                    <h2>Interests: likes to play games</h2>
-                </div>
-                <div id="profileStats">
-                    <div id="profileFollowing"><p>statsssssssssssssss</p></div>
-                    <div id="profileFollowers"></div>
-                    <div id="profileNumOfTopics"></div>
-                    <div id="profileNumOfThreads"></div>
-
-                </div>
+                <ProfileExtras bio={bio} interests={interests}/>
+                <ProfileStats />
             </div>
             <div>
 
                 <p id="createdTopicsTitle"> <strong>Created Topics</strong></p>
                 <div id="createdTopicsContainer">
-                    {profile.map((topic) => (
+                    {user.posts.map((topic) => (
                         <TopicCard
-                            key={topic.id}
+                            key={topic.post_id}
                             image={topic.image}
                             title={topic.title}
                             description={topic.description}

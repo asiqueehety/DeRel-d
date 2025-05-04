@@ -31,7 +31,14 @@
   src: url('../public/resources/fonts/Navara\ Demo-Regular.otf') format('opentype');
 }
 
-#profileTop
+#ProfileExtras_interests
+{
+  background-color: beige;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+
+.profileTop
 {
   text-align: center;
   border-bottom-left-radius: 15px;
@@ -70,11 +77,12 @@
   margin-right: 2vh;
 }
 
-#profileExtras
+#profileExtras_bio
 {
   background-color: #b6c4be;
   border-radius: 15px;
   box-shadow: 0 0 10px #938484;
+  margin-bottom: 6vh;
 }
 
 #profileStats
@@ -91,7 +99,6 @@
 {
   display: grid;
   grid-template-rows: 5fr 0.5fr 0.5fr 0.5fr;
-
   background-color: #b6c4be;
   border-radius: 15px;
   box-shadow: 0 0 10px #938484;
@@ -101,7 +108,9 @@
 #profileCard > *
 {
   border-radius: 15px;
-  background-color: #838d8f;
+  background-color: #071416;
+  color: #ffffff;
+  text-align: center;
   box-shadow: 0 0 10px #000000;
   margin-left: 2vh;
   margin-right: 2vh;
@@ -115,6 +124,7 @@
   margin-top: 2vh;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 2vh;
   border-radius: 20px;
   box-shadow: 0 0 10px #300303;
   transition: all 0.3s ease-in-out;

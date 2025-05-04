@@ -261,7 +261,8 @@ app.post("/createTopic", requireLogin,
 
     app.get("/api/profile", requireLogin, (req, res) => {
         const userId = req.session.userId; // Get the user ID from the request parameters
-        db.query("select users.*, posts.* from users inner join posts on users.id=posts.user_id where users.id= $1 ;", [userId], (err, result) => {
+        db.query("select * from posts where posts.user_id=$1;", [userId], (err, result) =>
+        {
             if (err) {
                 console.error("Database Error:", err);
                 return res.status(500).send("Database error");
@@ -271,7 +272,80 @@ app.post("/createTopic", requireLogin,
                 return res.status(404).send("User not found");
             }
 
-            const user = result.rows;
-            res.json(user);
+            const posts = result.rows;
+
+            //I want to also do another db query where I get all the interests of the user and add it to the user object's first entry as an array of interests
+            db.query("SELECT interests.interest FROM user_interests INNER JOIN interests ON user_interests.interest_id=interests.interest_id WHERE user_interests.user_id = $1", [userId], (err2, result2) =>
+            {
+                if (err2) {
+                    console.error("Database Error:", err);
+                    return res.status(500).send("Database error");
+                }
+
+                if (result2.rows.length === 0) {
+                    return res.status(404).send("User not found");
+                }
+
+                const interests = result2.rows.map(row => row.interest); // Extract interests from the result
+
+                db.query("SELECT users.id, users.username, users.emailaddress, users.pro_picture, users.location, users.community_id, user_extras.bio FROM users INNER JOIN user_extras ON users.id = user_extras.user_id WHERE id=$1", [userId], (err3, result3) =>
+                {
+                    if (err3) {
+                        console.error("Database Error:", err);
+                        return res.status(500).send("Database error");
+                    }
+
+                    if (result3.rows.length === 0) {
+                        return res.status(404).send("User not found");
+                    }
+
+                    const profile = result3.rows[0];
+
+                    const response =
+                    {
+                        profile,
+                        interests,
+                        posts,
+                    };
+                    console.log(response); // Log the response object to see its properties
+                    res.json(response); // Send the response as JSON
+                });
+            });
+        });
+    });
+
+    app.get("/api/posts", (req, res) => {
+        db.query("SELECT posts.*, users.username, users.location FROM posts INNER JOIN users ON posts.user_id = users.id", (err, result) => {
+            if (err) {
+                console.error("Database Error:", err);
+                return res.status(500).send("Database error");
+            }
+
+            if (result.rows.length === 0) {
+                return res.status(404).send("No posts found");
+            }
+
+            const posts = result.rows;
+            res.json(posts);
+        });
+    });
+
+
+    app.put("/api/profile/bio", requireLogin, (req, res) => {
+        const userId = req.session.userId; // Get the user ID from the request parameters
+        const newBio = req.body.bio; // Get the new bio from the request body
+
+        db.query("INSERT INTO user_extras(bio,user_id) VALUES ($1,$2) ON CONFLICT (user_id) DO UPDATE SET bio = EXCLUDED.bio RETURNING bio;", [newBio, userId], (err, result) => {
+            if (err) {
+                console.error("Database Error:", err);
+                return res.status(500).send("Database error");
+            }
+
+            if (result.rows.length === 0) {
+                return res.status(404).send("User not found");
+            }
+
+            const bio = result.rows[0].bio;
+            res.json({bio});
         });
     });

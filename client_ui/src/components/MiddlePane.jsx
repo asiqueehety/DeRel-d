@@ -1,8 +1,64 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Post from "./Post";
 
 export default function MiddlePane()
 {
+
+
+    
+    // const posts = [
+    //     {
+    //         username: "asiqueeee",
+    //         emailaddress: "nigga@koko.com",
+    //         location: "dhaka",
+    //         pro_picture: "/resources/me.jpg",
+    //         post_id: 1,
+    //         image: "/resources/me.jpg",
+    //         title: "My Topic",
+    //         description: "This is a description of my topic.",
+    //         hashtags: ["#tag1", "#tag2"],
+    //         date: "2023-10-01",
+    //         time: "12:00 PM",
+    //         location: "Dhaka",
+    //         created_at: "2023-10-01T12:00:00Z",
+    //         updated_at: "2023-10-01T12:00:00Z",
+    //     },
+    //     {
+    //         username: "asiqueeee",
+    //         emailaddress: "nigga@koko.com",
+    //         location: "dhaka",
+    //         pro_picture: "/resources/me2.jpg",
+    //         post_id: 2,
+    //         image: "/resources/me2.jpg",
+    //         title: "My Topic",
+    //         description: "This is a description of my topic.22222",
+    //         location: "Dhaka",
+    //         created_at: "2023-10-01T12:00:00Z",
+    //         updated_at: "2023-10-01T12:00:00Z",
+    //     }];
+    
+
+
+    const [posts, setPosts] = useState(null);
+
+    useEffect(() => {
+            fetch("/api/posts")
+                .then(res => {
+                    if (!res.ok) throw new Error("Failed to fetch profile");
+                    return res.json();
+                })
+                .then(data => {
+                    setPosts(data);
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+        }, []);
+    
+        if (!posts) {
+            return <p>Loading topics...</p>;
+        }
+
     const desc1 = 
         "\"The July Revolution of Bangladesh: A New Dawn of Democratic Awakening\"\n\n" +
         "Throughout history, revolutions have served as the turning points of nations—moments when ordinary people rise against oppression, demanding justice, equality, and liberty. \n" +
@@ -35,7 +91,11 @@ export default function MiddlePane()
         <div id="feed">
             <Post title="The July Revolution of Bangladesh: A New Dawn of Democratic Awakening" image="/resources/hasinaflees.webp" username="Nigga" date="hello" description={desc1} hashtags={hashtags1}/>
             <Post image="/resources/sextet.webp" title="বার্সা, একটি ইতিহাস" description={desc2} hashtags={hashtags2}/>
-            
+            {
+                posts.map((post) => (
+                    <Post key={post.post_id} title={post.title} image={post.image} username={post.username} date={post.created_at} description={post.description} hashtags={hashtags2} location={post.location}/>
+                ))
+            }
         </div>
     );
 }
