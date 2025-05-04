@@ -31,6 +31,11 @@
   src: url('../public/resources/fonts/Navara\ Demo-Regular.otf') format('opentype');
 }
 
+#profileUsername
+{
+  font-size: 4vh;
+}
+
 #ProfileExtras_interests
 {
   background-color: beige;
@@ -81,6 +86,7 @@
 {
   background-color: #b6c4be;
   border-radius: 15px;
+  text-align: center;
   box-shadow: 0 0 10px #938484;
   margin-bottom: 6vh;
 }
