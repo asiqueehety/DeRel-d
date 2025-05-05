@@ -301,8 +301,7 @@ app.get("/api/profile", requireLogin, (req, res) => {
                         console.error("Database Error:", err);
                         return res.status(500).send("Database error");
                     }
-                    const bio = result4.bio;
-                    profile.bio = bio; // Add the bio to the profile object
+                    profile.bio = result4.rows[0].bio; // Add the bio to the profile object
 
                     const response =
                     {

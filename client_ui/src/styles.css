@@ -256,7 +256,7 @@
 #createTopicForm > *:hover
 {
   box-shadow: 0 0 10px #817c7c;
-  cursor: pointer;
+  cursor: text;
   transform: scale(0.995);
 }
 
@@ -264,6 +264,7 @@
 {
   box-shadow: 0 0 10px #000000;
   transition: all 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 #createTopicDesc
