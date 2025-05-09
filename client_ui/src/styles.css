@@ -36,11 +36,16 @@
   font-size: 4vh;
 }
 
+#extrasInterests
+{
+  display: grid;
+  grid-template-columns: 9fr 1fr;
+
+}
+
 #ProfileExtras_interests
 {
   background-color: beige;
-  margin-top: 2vh;
-  margin-bottom: 2vh;
 }
 
 .profileTop
@@ -160,10 +165,6 @@
 
 #topicCardImg
 {
-  /* width: 100%;
-  max-width: 300px;
-  height: auto;
-  aspect-ratio: 2/1; */
   width: 25vh;
   height: 25vh;
   border-radius: 15px;
@@ -721,6 +722,28 @@
   transform: scale(1.05);
 }
 
+.rmvBtn
+{
+  background-color: #e4dada;
+  color: #322424;
+  border: none;
+  height: 2vh;
+  width: 2vh;
+  border-radius: 10px;
+  text-align: center;
+  transition: all 0.1s ease-in-out;
+  padding: 0.5em 1em; /* Add enough space around text */
+  white-space: nowrap; /* Prevent line break inside */
+  text-overflow: ellipsis; /* Optional: add "..." if text overflows */
+  border: none;
+}
+.rmvBtn:hover
+{
+  transform: scale(.95);
+  background-color: #ff0000;
+  color: azure;
+  border: none;
+}
 
 
 

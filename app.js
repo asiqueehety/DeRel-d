@@ -391,3 +391,71 @@ app.put("/api/profile/interests", requireLogin, (req, res) => {
         );
     });
 });
+
+app.delete("/api/profile/interests", requireLogin, (req, res) => {
+    const userId = req.session.userId;
+    const interestToRemove = req.body.interest;
+
+    db.query("DELETE FROM user_interests WHERE user_id = $1 AND interest_id = (SELECT interest_id FROM interests WHERE interest = $2)", [userId, interestToRemove], (err) => {
+        if (err) {
+            console.error("Database Error:", err);
+            return res.status(500).send("Database error");
+        }
+
+        res.json({ message: "Interest removed successfully" });
+    });
+});
+
+app.post("/api/follow", requireLogin, (req, res) => 
+{
+    const userId = req.session.userId;
+    const post_id = req.body.post_id; // Assuming post_id is sent in the request body
+    db.query("INSERT INTO following (post_id, follower_id) VALUES ($1, $2)", [post_id, userId], (err) => {
+        if (err) {
+            console.error("Database Error:", err);
+            return res.status(500).send("Database error");
+        }
+        res.json({ message: "Followed successfully" });
+    });
+});
+
+app.delete("/api/unfollow", requireLogin, (req, res) => {
+    const userId = req.session.userId;
+    const post_id = req.body.post_id; // Assuming post_id is sent in the request body
+    db.query("DELETE FROM following WHERE post_id = $1 AND follower_id = $2", [post_id, userId], (err) => {
+        if (err) {
+            console.error("Database Error:", err);
+            return res.status(500).send("Database error");
+        }
+        res.json({ message: "Unfollowed successfully" });
+    });
+});
+
+app.get("/api/isFollowing", requireLogin, (req, res) => {
+    const userId = req.session.userId;
+    const post_id = req.query.post_id; // Assuming post_id is sent
+
+    db.query("SELECT * FROM following WHERE post_id = $1 AND follower_id = $2", [post_id, userId], (err, result) => {
+        if (err) {
+            console.error("Database Error:", err);
+            return res.status(500).send("Database error");
+        }
+
+        res.json({ isFollowing: result.rows.length > 0 });
+    });
+});
+
+app.get("/api/topicsFollowing", requireLogin, (req, res) =>
+{
+    const userId = req.session.userId; // Get the user ID from the session
+
+    db.query("SELECT posts.* FROM posts INNER JOIN following ON posts.post_id = following.post_id WHERE following.follower_id = $1", [userId], (err, result) => {
+        if (err) {
+            console.error("Database Error:", err);
+            return res.status(500).send("Database error");
+        }
+
+        const topics = result.rows;
+        res.json(topics); // Send the topics as JSON response
+    });
+});

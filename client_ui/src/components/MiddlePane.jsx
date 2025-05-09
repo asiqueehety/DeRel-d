@@ -28,7 +28,7 @@ export default function MiddlePane()
         <div id="feed">
             {
                 posts.map((post) => (
-                    <Post key={post.post_id} title={post.title} image={post.image} username={post.username} date={post.created_at} description={post.description} hashtags={hashtags2} location={post.location}/>
+                    <Post key={post.post_id} post_id={post.post_id} title={post.title} image={post.image} username={post.username} date={post.created_at} description={post.description} hashtags={hashtags2} location={post.location}/>
                 ))
             }
         </div>
