@@ -223,10 +223,9 @@ app.post("/createTopic", requireLogin,
         const desc = req.body.description;
         const hashtags = req.body.hashtags;
         const image = "/resources/"+(req.body.image); // Assuming you handle image upload separately
-        const date = new Date().toISOString(); // Get the current date and time
         const location = user1.location; // Assuming you have a location field in the user object
-        const created_at = new Date().toISOString(); // Get the current date and time
-        const updated_at = new Date().toISOString(); // Get the current date and time
+        const created_at = new Date().toUTCString();
+        const updated_at = new Date().toUTCString();
 
         db.query
         (
@@ -457,5 +456,54 @@ app.get("/api/topicsFollowing", requireLogin, (req, res) =>
 
         const topics = result.rows;
         res.json(topics); // Send the topics as JSON response
+    });
+});
+
+
+app.put("/api/rating", requireLogin, (req, res) => 
+{
+    const userId = req.session.userId;
+    const rating = req.body.rating;
+    const post_id = req.body.post_id;
+
+    db.query("INSERT INTO post_ratings (post_id, rater_id, rating) VALUES ($1, $2, $3) ON CONFLICT (post_id, rater_id) DO UPDATE SET rating = EXCLUDED.rating", [post_id, userId, rating], (err) => {
+        if (err) {
+            console.error("Database Error:", err);
+            return res.status(500).send("Database error");
+        }
+        res.json({ message: "Rating updated successfully" });
+    });
+});
+
+app.get("/api/rating", requireLogin, (req, res) => {
+    const userId = req.session.userId;
+    const post_id = req.query.post_id;
+
+    db.query("SELECT rating FROM post_ratings WHERE post_id = $1 AND rater_id = $2", [post_id, userId], (err, result) => {
+        if (err) {
+            return res.json({ rating : 0 });
+        }
+
+        if (result.rows.length === 0) {
+            return res.json({ rating: 0 });
+        }
+
+        const rating = result.rows[0].rating;
+        return res.json({ rating });
+    });
+});
+
+app.get("/api/followCount", requireLogin, (req, res) => {
+    const userId = req.session.userId;
+    const post_id = req.query.post_id; // Assuming post_id is sent in the request body
+
+    db.query("SELECT COUNT(*) FROM following WHERE post_id = $1", [post_id], (err, result) => {
+        if (err) {
+            console.error("Database Error:", err);
+            return res.status(500).send("Database error");
+        }
+
+        const followCount = parseInt(result.rows[0].count, 10);
+        res.json({ followCount });
     });
 });

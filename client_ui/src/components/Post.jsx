@@ -5,10 +5,13 @@ import RatingSlider from "./RatingSlider";
 
 export default function Post(props)
 {
-
     const [showSlider, setShowSlider] = useState(false);
     const [rating, setRating] = useState("Rate");
     const [follow, setFollow] = useState("Follow");
+    const [followCount, setFollowCount] = useState(0);
+    const [threadCount, setThreadCount] = useState(0);
+    const [showFollow, setShowFollow] = useState("hidden");
+    const [showThreadCount, setShowThreadCount] = useState("hidden");
 
     useEffect(() => {
         fetch(`api/isFollowing?post_id=${props.post_id}`, {
@@ -27,13 +30,67 @@ export default function Post(props)
         });
     }, [props.post_id]); // re-run if post_id changes
 
+    useEffect(() => 
+        {
+            fetch(`api/rating?post_id=${props.post_id}`,
+            {
+            method: "GET",
+            credentials: "include",
+            headers:
+                {
+                    "Content-Type": "application/json",
+                },
+            })
+            .then(response =>
+            {
+                if (!response.ok) throw new Error("Failed to fetch rating");
+                return response.json();
+            })
+            .then(data =>
+            {
+                data.rating? setRating(data.rating) : setRating("Rate");
+            })
+            .catch(err =>
+            {
+                console.error("Failed to fetch rating", err);
+                setRating("Rate");
+            });
+        }, [props.post_id]); // re-run if post_id changes
+
+    useEffect(() =>
+    {
+        fetch(`api/followCount?post_id=${props.post_id}`,
+        {
+            method: "GET",
+            credentials: "include",
+            headers:
+                {
+                    "Content-Type": "application/json",
+                },
+        })
+        .then(response =>
+        {
+            if (!response.ok) throw new Error("Failed to fetch follow count");
+            return response.json();
+        })
+        .then(data =>
+        {
+            setFollowCount(data.followCount);
+
+        })
+        .catch(err =>
+        {
+            console.error("Failed to fetch follow count", err);
+            setFollowCount(0);
+        });
+    }, [props.post_id]); // re-run if post_id changes
+                
 
 
     function handleFollow()
     {
         if (follow === "Follow")
         {
-            setFollow("Unfollow");
             fetch("/api/follow", {
                 method: "POST",
                 headers: {
@@ -47,6 +104,8 @@ export default function Post(props)
             })
             .then(data => {
                 console.log("Followed successfully:", data);
+                setFollow("Unfollow");
+                setFollowCount(prevCount => prevCount + 1);
             })
             .catch(err => {
                 console.error(err);
@@ -54,7 +113,7 @@ export default function Post(props)
         }
         else
         {
-            setFollow("Follow");
+            
             fetch("/api/unfollow", {
                 method: "DELETE",
                 headers: {
@@ -69,6 +128,8 @@ export default function Post(props)
             .then(data =>
                 {
                     console.log("Unfollowed successfully:", data);
+                    setFollow("Follow");
+                    setFollowCount(prevCount => prevCount - 1);
                 }
             )
         }
@@ -86,6 +147,19 @@ export default function Post(props)
         setRating(`${value}`);
     }
 
+    function handleFollowOver(){
+        setShowFollow("visible");
+    }
+    function handleFollowOut(){
+        setShowFollow("hidden");
+    }
+    function handleCTover(){
+        setShowThreadCount("visible");
+    }
+    function handleCTout(){
+        setShowThreadCount("hidden");
+    }
+
     return(
         <div id="post">
             <h2 id="topicTitle" >{props.title}</h2>
@@ -97,12 +171,12 @@ export default function Post(props)
             </p>
             <p id="topicDesc">{props.description}</p>
             <div id="sliderBtn" onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} >
-                {showSlider ? <RatingSlider onChange={handleRatingChange}/> : rating}
+                {showSlider ? <RatingSlider post_id={props.post_id} onChange={handleRatingChange}/> : rating}
             </div>
             <div id="postTags">
-                <button className="btnn hacker BtnTxt" onClick={handleFollow} >{follow}</button>
+                <button className="btnn hacker BtnTxt" onClick={handleFollow} onMouseOver={handleFollowOver} onMouseOut={handleFollowOut}>{follow} <p className="Count" style={{visibility:showFollow}}>{followCount}</p> </button>
                 <button className="btnn hacker BtnTxt">Create Thread</button>
-                <button className="btnn hacker BtnTxt">Threads</button>
+                <button className="btnn hacker BtnTxt" onMouseOver={handleCTover} onMouseOut={handleCTout}>Threads <p className="Count" style={{visibility:showThreadCount}}>{threadCount}</p> </button>
             </div>
             <div id="topicInfo">
                 <button id="topicUname"><strong>{props.username}</strong></button>

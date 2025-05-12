@@ -31,6 +31,15 @@
   src: url('../public/resources/fonts/Navara\ Demo-Regular.otf') format('opentype');
 }
 
+.followCount
+{
+  background-color: #e3d3d3;
+  color: #052c1f;
+  border-radius: 15px;
+  border: none;
+
+}
+
 #profileUsername
 {
   font-size: 4vh;
@@ -218,22 +227,6 @@
   margin-left: 2vh;
   margin-right: 2vh;
 }
-
-/* #createTopicForm
-{
-  width: 100%;
-  padding: 2vh 2vh;
-  border: none;
-  border-radius: 20px;
-  font-family: 'RobotoCondensed';
-  cursor: pointer;
-  font-weight: bold;
-  background-color: #70757f;
-  font-size: 2vh;
-  letter-spacing: 1px;
-  box-shadow: 0 0 10px #333131;
-  transition: all 0.3s ease-in-out;
-} */
 
 #createTopicForm > *
 {
