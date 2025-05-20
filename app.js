@@ -508,20 +508,6 @@ app.get("/api/followCount", requireLogin, (req, res) => {
     });
 });
 
-app.get("/api/threads", requireLogin, (req, res) => {
-    const post_id = req.query.post_id; // Assuming post_id is sent in the request body
-
-    db.query("SELECT * FROM threads WHERE post_id = $1", [post_id], (err, result) => {
-        if (err) {
-            console.error("Database Error:", err);
-            return res.status(500).send("Database error");
-        }
-
-        const threads = result.rows;
-        res.json(threads);
-    });
-});
-
 app.post("/api/threads", requireLogin, (req, res) => {
     const post_id = req.body.post_id; // Assuming post_id is sent in the request body
     const userId = req.session.userId;
@@ -569,5 +555,24 @@ app.get("/api/threadCount", requireLogin, (req, res) =>
 
         const threadCount = parseInt(result.rows[0].count, 10);
         res.json({ threadCount });
+    });
+});
+
+app.get("/api/threads", requireLogin, (req, res) => {
+    const post_id = req.query.post_id; // Assuming post_id is sent in the request body
+
+    db.query(
+        `select users.username, users.pro_picture, users.location, thread_replies.reply, thread_replies.created_at
+        from threads
+        inner join thread_replies on threads.thread_id=thread_replies.thread_id
+        inner join users on thread_replies.replier_id=users.id
+        where threads.post_id=$1`
+        , [post_id], (err, result) => {
+        if (err) {
+            console.error("Database Error:", err);
+            return res.status(500).send("Database error");
+        }
+        const threads = result.rows;
+        res.json(threads);
     });
 });

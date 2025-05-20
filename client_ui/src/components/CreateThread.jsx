@@ -32,6 +32,9 @@ export default function CreateThread(props)
         setReply("");
         const form = document.getElementById("createThread");
         form.reset();
+        props.setThreadCount(props.threadCount + 1);
+        props.setShowCreateThread(false);
+        props.setShowThreads(true);
     }
 
     return(

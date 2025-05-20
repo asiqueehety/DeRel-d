@@ -1,4 +1,4 @@
-import React, {useState , useEffect} from "react";
+import React, {useState , useEffect, use} from "react";
 import RatingSlider from "./RatingSlider";
 import Thread from "./Thread";
 import CreateThread from "./CreateThread";
@@ -16,6 +16,9 @@ export default function Post(props)
     const [showThreads, setShowThreads] = useState(false);
     const [threads, setThreads] = useState([]);
     const [showCreateThread, setShowCreateThread] = useState(false);
+
+    useEffect(() => {
+    }, [props.post_id]); // re-run if post_id changes
 
     useEffect(() => {
         fetch(`api/isFollowing?post_id=${props.post_id}`, {
@@ -75,7 +78,6 @@ export default function Post(props)
         .then(response =>
         {
             if (!response.ok) throw new Error("Failed to fetch follow count");
-            setThreads(response);
             return response.json();
         })
         .then(data =>
@@ -86,24 +88,6 @@ export default function Post(props)
         {
             console.error("Failed to fetch follow count", err);
             setFollowCount(0);
-        });
-    }, [props.post_id]); // re-run if post_id changes
-
-    useEffect(() =>
-    {
-        fetch('api/threads',
-        {
-            method: 'GET',
-            credentials: 'include',
-            headers:
-            {
-                "Content-Type": "application/json",
-            },
-        })
-        .then(response =>
-        {
-            if (!response.ok) throw new Error("Failed to fetch threads");
-            return response.json();
         });
     }, [props.post_id]); // re-run if post_id changes
 
@@ -133,10 +117,30 @@ export default function Post(props)
             setThreadCount(0);
         });
     }, [props.post_id]); // re-run if post_id changes
-    
+
     function handleShowThreads()
     {
+        fetch(`/api/threads?post_id=${props.post_id}`, {
+            method: "GET",
+            credentials: "include", 
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then(response => {
+            if (!response.ok) throw new Error("Failed to fetch threads");
+            return response.json();
+        })
+        .then(data => {
+            setThreads(data);
+            console.log("Threads fetched successfully:", data);
+        })
+        .catch(err => {
+            console.error("Failed to fetch threads", err);
+            setThreads([]);
+        });
         setShowThreads(!showThreads);
+
     }
     function handleCreateThreadClick()
     {
@@ -237,9 +241,9 @@ export default function Post(props)
                 <button id="topicLocation"><strong>{props.location}</strong></button>
             </div>
             <div className={`threadContainer ${showCreateThread ? "show" : "hide"}`}>
-                <CreateThread post_id={props.post_id} />
+                <CreateThread post_id={props.post_id} threadCount={threadCount} setThreadCount={setThreadCount} setShowCreateThread={setShowCreateThread} setShowThreads={setShowThreads}/>
             </div>
-            <div className={`threadContainer ${showThreads ? "show" : "hide"}`}>
+            <div id="threadsMap" className={`threadContainer ${showThreads ? "show" : "hide"}`}>
                 {threads && threads.length > 0 ? (
                     threads.map((thread, index) => (
                     <Thread key={index} thread={thread} post_id={props.post_id} />

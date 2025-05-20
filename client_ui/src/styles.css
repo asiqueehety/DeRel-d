@@ -36,6 +36,14 @@
   grid-template-columns: 9fr 1fr;
 }
 
+#threadsMap > *
+{
+  border-radius: 8px;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+
+}
+
 .threadContainer {
   max-height: 0;
   overflow: hidden;
@@ -47,7 +55,7 @@
 }
 
 .threadContainer.show {
-  max-height: 1000px; /* Should be higher than expected content */
+  max-height: fit-content; /* Should be higher than expected content */
   padding: 10px;
 }
 
@@ -55,7 +63,7 @@
 #threadReplies
 {
   display: grid;
-  grid-template-columns: 1fr 5fr 1fr 1fr;
+  grid-template-columns: 7fr 1fr;
   background-color: aquamarine;
   color: #052c1f;
 }
