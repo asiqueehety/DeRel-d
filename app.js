@@ -507,3 +507,67 @@ app.get("/api/followCount", requireLogin, (req, res) => {
         res.json({ followCount });
     });
 });
+
+app.get("/api/threads", requireLogin, (req, res) => {
+    const post_id = req.query.post_id; // Assuming post_id is sent in the request body
+
+    db.query("SELECT * FROM threads WHERE post_id = $1", [post_id], (err, result) => {
+        if (err) {
+            console.error("Database Error:", err);
+            return res.status(500).send("Database error");
+        }
+
+        const threads = result.rows;
+        res.json(threads);
+    });
+});
+
+app.post("/api/threads", requireLogin, (req, res) => {
+    const post_id = req.body.post_id; // Assuming post_id is sent in the request body
+    const userId = req.session.userId;
+    const reply = req.body.reply;
+    const time = new Date().toUTCString();
+
+    db.query("insert into thread_replies (reply_order,reply,replier_id,created_at) values ($1,$2,$3,$4)", [0,reply,userId,time], (err, result) => {
+        if (err) {
+            console.error("Database Error:", err);
+            return res.status(500).send("Database error");
+        }
+        db.query("SELECT thread_id FROM thread_replies WHERE reply_order = $1 AND reply= $2 AND replier_id= $3 AND created_at = $4", [0,reply,userId,time], (err, result) => {
+            if (err) {
+                console.error("Database Error:", err);
+                return res.status(500).send("Database error");
+            }
+
+            const thread_id = result.rows[0].thread_id;
+            db.query("INSERT INTO threads (post_id, thread_id) VALUES ($1, $2)", [post_id, thread_id], (err) => {
+                if (err) {
+                    console.error("Database Error:", err);
+                    return res.status(500).send("Database error");
+                }
+                db.query("INSERT INTO thread_participants (thread_id, pcp_id) VALUES ($1, $2)", [thread_id, userId], (err) => {
+                    if (err) {
+                        console.error("Database Error:", err);
+                        return res.status(500).send("Database error");
+                    }
+                    res.status(201).send("Thread created successfully");
+                });
+            });
+        });
+    })
+});
+
+app.get("/api/threadCount", requireLogin, (req, res) => 
+{
+    const userId = req.session.userId;
+    const post_id = req.query.post_id; // Assuming post_id is sent in the request body
+    db.query("SELECT COUNT(thread_id) FROM threads WHERE post_id = $1", [post_id], (err, result) => {
+        if (err) {
+            console.error("Database Error:", err);
+            return res.status(500).send("Database error");
+        }
+
+        const threadCount = parseInt(result.rows[0].count, 10);
+        res.json({ threadCount });
+    });
+});

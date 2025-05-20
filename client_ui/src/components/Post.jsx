@@ -1,6 +1,7 @@
 import React, {useState , useEffect} from "react";
 import RatingSlider from "./RatingSlider";
-
+import Thread from "./Thread";
+import CreateThread from "./CreateThread";
 
 
 export default function Post(props)
@@ -12,6 +13,9 @@ export default function Post(props)
     const [threadCount, setThreadCount] = useState(0);
     const [showFollow, setShowFollow] = useState("hidden");
     const [showThreadCount, setShowThreadCount] = useState("hidden");
+    const [showThreads, setShowThreads] = useState(false);
+    const [threads, setThreads] = useState([]);
+    const [showCreateThread, setShowCreateThread] = useState(false);
 
     useEffect(() => {
         fetch(`api/isFollowing?post_id=${props.post_id}`, {
@@ -55,7 +59,7 @@ export default function Post(props)
                 console.error("Failed to fetch rating", err);
                 setRating("Rate");
             });
-        }, [props.post_id]); // re-run if post_id changes
+    }, [props.post_id]); // re-run if post_id changes
 
     useEffect(() =>
     {
@@ -71,12 +75,12 @@ export default function Post(props)
         .then(response =>
         {
             if (!response.ok) throw new Error("Failed to fetch follow count");
+            setThreads(response);
             return response.json();
         })
         .then(data =>
         {
             setFollowCount(data.followCount);
-
         })
         .catch(err =>
         {
@@ -84,9 +88,60 @@ export default function Post(props)
             setFollowCount(0);
         });
     }, [props.post_id]); // re-run if post_id changes
-                
 
+    useEffect(() =>
+    {
+        fetch('api/threads',
+        {
+            method: 'GET',
+            credentials: 'include',
+            headers:
+            {
+                "Content-Type": "application/json",
+            },
+        })
+        .then(response =>
+        {
+            if (!response.ok) throw new Error("Failed to fetch threads");
+            return response.json();
+        });
+    }, [props.post_id]); // re-run if post_id changes
 
+    useEffect(() =>
+    {
+        fetch(`/api/threadCount?post_id=${props.post_id}`,
+        {
+            method: "GET",
+            credentials: "include",
+            headers:
+                {
+                    "Content-Type": "application/json",
+                },
+        })
+        .then(response =>
+        {
+            if (!response.ok) throw new Error("Failed to fetch thread count");
+            return response.json();
+        })
+        .then(data =>
+        {
+            setThreadCount(data.threadCount);
+        })
+        .catch(err =>
+        {
+            console.error("Failed to fetch thread count", err);
+            setThreadCount(0);
+        });
+    }, [props.post_id]); // re-run if post_id changes
+    
+    function handleShowThreads()
+    {
+        setShowThreads(!showThreads);
+    }
+    function handleCreateThreadClick()
+    {
+        setShowCreateThread(!showCreateThread);
+    }
     function handleFollow()
     {
         if (follow === "Follow")
@@ -134,19 +189,15 @@ export default function Post(props)
             )
         }
     }
-
     function handleMouseOver() {
         setShowSlider(true);
     }
-
     function handleMouseOut() {
         setShowSlider(false);
     }
-
     function handleRatingChange(value) {
         setRating(`${value}`);
     }
-
     function handleFollowOver(){
         setShowFollow("visible");
     }
@@ -175,14 +226,27 @@ export default function Post(props)
             </div>
             <div id="postTags">
                 <button className="btnn hacker BtnTxt" onClick={handleFollow} onMouseOver={handleFollowOver} onMouseOut={handleFollowOut}>{follow} <p className="Count" style={{visibility:showFollow}}>{followCount}</p> </button>
-                <button className="btnn hacker BtnTxt">Create Thread</button>
-                <button className="btnn hacker BtnTxt" onMouseOver={handleCTover} onMouseOut={handleCTout}>Threads <p className="Count" style={{visibility:showThreadCount}}>{threadCount}</p> </button>
+                <button className="btnn hacker BtnTxt" onClick={handleCreateThreadClick}>Create Thread</button>
+                <button className="btnn hacker BtnTxt" onMouseOver={handleCTover} onMouseOut={handleCTout} onClick={handleShowThreads}>Threads <p className="Count" style={{visibility:showThreadCount}}>{threadCount}</p> </button>
             </div>
+            
             <div id="topicInfo">
                 <button id="topicUname"><strong>{props.username}</strong></button>
                 <button id="topicDate"><strong>{props.date}</strong></button>
                 <button id="topicTime"><strong>{props.time}</strong></button>
                 <button id="topicLocation"><strong>{props.location}</strong></button>
+            </div>
+            <div className={`threadContainer ${showCreateThread ? "show" : "hide"}`}>
+                <CreateThread post_id={props.post_id} />
+            </div>
+            <div className={`threadContainer ${showThreads ? "show" : "hide"}`}>
+                {threads && threads.length > 0 ? (
+                    threads.map((thread, index) => (
+                    <Thread key={index} thread={thread} post_id={props.post_id} />
+                    ))
+                ) : (
+                    <p>No threads yet.</p>
+                )}
             </div>
         </div>
     )

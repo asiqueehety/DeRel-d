@@ -7,7 +7,7 @@ export default function CreateTopic() {
       <form action="/createTopic" method="post" id="createTopicForm">
         <input type="text" placeholder="Add Title" name="title" id="createTopicTitle"/>
         <input type="file" placeholder="Add Image" accept="image/*" name="image" id="createTopicImg" />
-        <textarea type="text" placeholder="Add description" name="description" id="createTopicDesc"></textarea>
+        <textarea type="text" placeholder="Add description" name="description" className="createTopicDesc"></textarea>
         <input type="text" placeholder="Add Hashtags" name="hashtags" id="createTopicHashtags"/>
         <button type="submit" id="createTopicSubmit">Submit</button>
       </form>

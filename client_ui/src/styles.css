@@ -31,6 +31,35 @@
   src: url('../public/resources/fonts/Navara\ Demo-Regular.otf') format('opentype');
 }
 
+#threadReply{
+  display: grid;
+  grid-template-columns: 9fr 1fr;
+}
+
+.threadContainer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  padding: 0 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.threadContainer.show {
+  max-height: 1000px; /* Should be higher than expected content */
+  padding: 10px;
+}
+
+
+#threadReplies
+{
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr 1fr;
+  background-color: aquamarine;
+  color: #052c1f;
+}
+
 .followCount
 {
   background-color: #e3d3d3;
@@ -261,7 +290,7 @@
   cursor: pointer;
 }
 
-#createTopicDesc
+.createTopicDesc
 {
   font-family: 'RobotoCondensed';
   text-shadow: #0b0b1d;
