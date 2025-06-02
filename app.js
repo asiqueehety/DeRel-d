@@ -308,7 +308,6 @@ app.get("/api/profile", requireLogin, (req, res) => {
                         interests,
                         posts,
                     };
-                    console.log(response); // Log the response object to see its properties
                     res.json(response); // Send the response as JSON
                 });
             });
@@ -508,40 +507,81 @@ app.get("/api/followCount", requireLogin, (req, res) => {
     });
 });
 
-app.post("/api/threads", requireLogin, (req, res) => {
-    const post_id = req.body.post_id; // Assuming post_id is sent in the request body
-    const userId = req.session.userId;
-    const reply = req.body.reply;
-    const time = new Date().toUTCString();
+// app.post("/api/threads", requireLogin, (req, res) => {
+//     const post_id = req.body.post_id; // Assuming post_id is sent in the request body
+//     const userId = req.session.userId;
+//     const reply = req.body.reply;
+//     const time = new Date().toUTCString();
 
-    db.query("insert into thread_replies (reply_order,reply,replier_id,created_at) values ($1,$2,$3,$4)", [0,reply,userId,time], (err, result) => {
-        if (err) {
-            console.error("Database Error:", err);
-            return res.status(500).send("Database error");
-        }
-        db.query("SELECT thread_id FROM thread_replies WHERE reply_order = $1 AND reply= $2 AND replier_id= $3 AND created_at = $4", [0,reply,userId,time], (err, result) => {
-            if (err) {
-                console.error("Database Error:", err);
-                return res.status(500).send("Database error");
-            }
+//     db.query("insert into thread_replies (reply_order,reply,replier_id,created_at) values ($1,$2,$3,$4)", [0,reply,userId,time], (err, result) => {
+//         if (err) {
+//             console.error("Database Error:", err);
+//             return res.status(500).send("Database error");
+//         }
+//         db.query("SELECT thread_id FROM thread_replies WHERE reply_order = $1 AND reply= $2 AND replier_id= $3 AND created_at = $4", [0,reply,userId,time], (err, result) => {
+//             if (err) {
+//                 console.error("Database Error:", err);
+//                 return res.status(500).send("Database error");
+//             }
 
-            const thread_id = result.rows[0].thread_id;
-            db.query("INSERT INTO threads (post_id, thread_id) VALUES ($1, $2)", [post_id, thread_id], (err) => {
-                if (err) {
-                    console.error("Database Error:", err);
-                    return res.status(500).send("Database error");
-                }
-                db.query("INSERT INTO thread_participants (thread_id, pcp_id) VALUES ($1, $2)", [thread_id, userId], (err) => {
-                    if (err) {
-                        console.error("Database Error:", err);
-                        return res.status(500).send("Database error");
-                    }
-                    res.status(201).send("Thread created successfully");
-                });
-            });
-        });
-    })
+//             const thread_id = result.rows[0].thread_id;
+//             db.query("INSERT INTO threads (post_id, thread_id) VALUES ($1, $2)", [post_id, thread_id], (err) => {
+//                 if (err) {
+//                     console.error("Database Error:", err);
+//                     return res.status(500).send("Database error");
+//                 }
+//                 db.query("INSERT INTO thread_participants (thread_id, pcp_id) VALUES ($1, $2)", [thread_id, userId], (err) => {
+//                     if (err) {
+//                         console.error("Database Error:", err);
+//                         return res.status(500).send("Database error");
+//                     }
+//                     db.query("INSERT INTO ongoing_threads (thread_id, user_id, permission) VALUES ($1, $2, $3)", [thread_id, userId, 'true'], (err) => {
+//                         if (err) {
+//                             console.error("Database Error:", err);
+//                             return res.status(500).send("Database error");
+//                         }
+//                         res.status(201).send("Thread created successfully");
+//                     });
+//                 });
+//             });
+//         });
+//     })
+// });
+
+app.post("/api/threads", requireLogin, async (req, res) => {
+  const { post_id, reply } = req.body;
+  const userId = req.session.userId;
+  const time = new Date().toUTCString();
+
+  try {
+    await db.query('BEGIN');
+
+    const insertReply = 
+    await db.query(
+      `INSERT INTO thread_replies (reply_order, reply, replier_id, created_at)
+       VALUES ($1, $2, $3, $4) RETURNING thread_id`,
+      [0, reply, userId, time]
+    );
+
+    const thread_id = insertReply.rows[0].thread_id;
+
+    await db.query(`INSERT INTO threads (post_id, thread_id) VALUES ($1, $2)`, [post_id, thread_id]);
+
+    await db.query(`INSERT INTO thread_participants (thread_id, pcp_id) VALUES ($1, $2)`, [thread_id, userId]);
+
+    await db.query(`INSERT INTO ongoing_threads (thread_id, user_id, permission) VALUES ($1, $2, $3)`, [thread_id, userId, 'true']);
+
+    await db.query('COMMIT');
+
+    res.status(201).send("Thread created successfully");
+  } catch (err) {
+    await db.query('ROLLBACK');
+    console.error("Database Error:", err);
+    res.status(500).send("Database error");
+  }
 });
+
+
 
 app.get("/api/threadCount", requireLogin, (req, res) => 
 {
@@ -574,5 +614,40 @@ app.get("/api/threads", requireLogin, (req, res) => {
         }
         const threads = result.rows;
         res.json(threads);
+    });
+});
+
+app.post("/api/logout", (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            console.error("Logout Error:", err);
+            return res.status(500).send("Failed to log out");
+        }
+        res.clearCookie('connect.sid'); // Clear the session cookie
+        res.status(200).send("Logged out successfully");
+    });
+});
+
+app.get("/api/ongoing-pcp", requireLogin, (req, res) => {
+    const userId = req.session.userId;
+
+    db.query
+    (
+        `select distinct posts.*, users.username, users.location from posts
+        inner join threads on posts.post_id = threads.post_id
+        inner join ongoing_threads on threads.thread_id = ongoing_threads.thread_id
+        inner join users on users.id = posts.user_id
+        where ongoing_threads.user_id = $1`,
+        [userId], (err, result) =>
+        {
+            if (err) 
+            {
+                console.error("Database Error:", err);
+                return res.status(500).send("Database error");
+            }
+
+        const ongoingThreads = result.rows;
+        console.log("Ongoing Threads:", ongoingThreads);
+        res.json(ongoingThreads);
     });
 });

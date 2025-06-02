@@ -36,6 +36,18 @@
   grid-template-columns: 9fr 1fr;
 }
 
+#editProfileBtn:hover
+{
+  box-shadow: green;
+  cursor: pointer;
+}
+
+#logoutBtn:hover
+{
+  box-shadow: red;
+  cursor: pointer;
+}
+
 #threadsMap > *
 {
   border-radius: 8px;
